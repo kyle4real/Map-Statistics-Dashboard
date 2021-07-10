@@ -3,3 +3,15 @@
     margin: 0;
     padding: 0;
 }
+
+:root {
+    --popup-BG: rgba(255, 255, 255, 0.8);
+}
+
+.leaflet-popup-content-wrapper {
+    background: var(--popup-BG);
+}
+
+.leaflet-popup-tip {
+    background: var(--popup-BG);
+}

@@ -1,13 +1,23 @@
 import { useState, useEffect } from "react";
-import { makeStyles, Container } from "@material-ui/core";
+import { makeStyles, Container, Typography } from "@material-ui/core";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
-// import "leaflet/dist/leaflet.css";
+import { Icon } from "leaflet";
+import pinSVG from "../../pin.svg";
 
 import { getAllCountries } from "../../api";
+
+const tiles = "http://stamen-tiles-{s}.a.ssl.fastly.net/toner/{z}/{x}/{y}.png";
+const attr = `Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>`;
+
+const pinPoint = new Icon({
+    iconUrl: pinSVG,
+    iconSize: [25, 25],
+});
 
 const MapDisplay = () => {
     const classes = useStyles();
     const [allCountries, setAllCountries] = useState([]);
+    const [activeCountry, setActiveCountry] = useState(null);
 
     useEffect(() => {
         const getData = async () => {
@@ -20,20 +30,20 @@ const MapDisplay = () => {
     return (
         <div className={classes.map}>
             <Container maxWidth="md">
-                <MapContainer
-                    center={[45.4215, -75.6971]}
-                    zoom={4}
-                    className={classes.leafletContainer}
-                >
-                    <TileLayer
-                        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-                    ></TileLayer>
+                <MapContainer center={[45.4215, -75.6971]} zoom={4} className="leaflet-container">
+                    <TileLayer url={tiles} attribution={attr}></TileLayer>
                     {allCountries.map((country) => (
                         <Marker
                             key={country.countryInfo._id || country.country.split(" ")[0]}
                             position={[country.countryInfo.lat, country.countryInfo.long]}
-                        />
+                            icon={pinPoint}
+                        >
+                            <Popup className={classes.popup}>
+                                <Typography variant="h5" color="textPrimary">
+                                    Cases: {country.cases}
+                                </Typography>
+                            </Popup>
+                        </Marker>
                     ))}
                 </MapContainer>
             </Container>
@@ -46,10 +56,6 @@ const useStyles = makeStyles((theme) => ({
     map: {
         paddingTop: theme.spacing(8),
         paddingBottom: theme.spacing(8),
-    },
-    leafletContainer: {
-        width: "100%",
-        height: "50vh",
     },
 }));
 
