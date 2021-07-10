@@ -5,11 +5,16 @@
 }
 
 :root {
-    --popup-BG: rgba(255, 255, 255, 0.8);
+    --popup-BG: rgba(255, 255, 255, 0.95);
 }
 
 .leaflet-popup-content-wrapper {
     background: var(--popup-BG);
+    border-radius: 2px;
+}
+
+.leaflet-popup-content {
+    margin: 0 19px;
 }
 
 .leaflet-popup-tip {

@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { makeStyles, Container, Typography } from "@material-ui/core";
+import { makeStyles, Container, Typography, Button } from "@material-ui/core";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import { Icon } from "leaflet";
 import pinSVG from "../../pin.svg";
@@ -38,16 +38,51 @@ const MapDisplay = () => {
                             position={[country.countryInfo.lat, country.countryInfo.long]}
                             icon={pinPoint}
                         >
-                            <Popup className={classes.popup}>
-                                <Typography variant="h5" color="textPrimary">
-                                    Cases: {country.cases}
-                                </Typography>
+                            <Popup>
+                                <div className={classes.popup}>
+                                    <Typography
+                                        variant="h6"
+                                        component="h1"
+                                        color="textPrimary"
+                                        className={classes.cases}
+                                    >
+                                        {country.country}
+                                    </Typography>
+                                    <Typography
+                                        variant="body2"
+                                        component="h2"
+                                        color="textPrimary"
+                                        className={classes.cases}
+                                    >
+                                        Cases: {country.cases}
+                                    </Typography>
+                                    <Typography
+                                        variant="body2"
+                                        component="h2"
+                                        color="textPrimary"
+                                        className={classes.deaths.toLocaleString()}
+                                    >
+                                        Deaths: {country.deaths}
+                                    </Typography>
+                                    <Button
+                                        color="primary"
+                                        variant="outlined"
+                                        size="small"
+                                        onClick={() => {
+                                            if (country.country !== activeCountry.country) {
+                                                setActiveCountry(country);
+                                            }
+                                        }}
+                                    >
+                                        Display Data
+                                    </Button>
+                                </div>
                             </Popup>
                         </Marker>
                     ))}
                 </MapContainer>
             </Container>
-            ;
+            {activeCountry && activeCountry.country}
         </div>
     );
 };
@@ -56,6 +91,17 @@ const useStyles = makeStyles((theme) => ({
     map: {
         paddingTop: theme.spacing(8),
         paddingBottom: theme.spacing(8),
+    },
+    popup: {
+        paddingBottom: theme.spacing(1),
+    },
+    cases: {
+        marginTop: theme.spacing(1),
+        marginBottom: theme.spacing(1),
+    },
+    deaths: {
+        marginTop: theme.spacing(1),
+        marginBottom: theme.spacing(1),
     },
 }));
 
