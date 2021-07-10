@@ -1,6 +1,6 @@
 import Header from "./components/Header/Header";
 import DataDisplay from "./components/DataDisplay/DataDisplay";
-import Map from "./components/Map/Map";
+import Map from "./components/MapDisplay/MapDisplay";
 
 const App = () => {
     return (
