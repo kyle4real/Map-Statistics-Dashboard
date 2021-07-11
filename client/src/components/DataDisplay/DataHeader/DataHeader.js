@@ -3,7 +3,7 @@ import Title from "../Title";
 
 import moment from "moment";
 
-const DataHeader = ({ country, countryFlag, updated }) => {
+const DataHeader = ({ country, countryFlag, updated, rank }) => {
     const classes = useStyles();
     return (
         <div className={classes.dataHeader}>
@@ -21,6 +21,17 @@ const DataHeader = ({ country, countryFlag, updated }) => {
                     ) : (
                         <i>{moment(updated).format("MMMM Do YYYY, h:mm:ss a")}</i>
                     )}
+                </Typography>
+            </div>
+            <div className={classes.rankContainer}>
+                <Title>Rank #{rank}</Title>
+                <Typography
+                    variant="body2"
+                    component="p"
+                    color="textPrimary"
+                    className={classes.footNote}
+                >
+                    <i>in cases</i>
                 </Typography>
             </div>
         </div>
@@ -45,6 +56,15 @@ const useStyles = makeStyles((theme) => ({
         width: "100%",
         height: "auto",
         boxShadow: `0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24)`,
+    },
+    rankContainer: {
+        position: "relative",
+    },
+    footNote: {
+        fontSize: "12px",
+        position: "absolute",
+        bottom: "-10px",
+        right: 0,
     },
 }));
 

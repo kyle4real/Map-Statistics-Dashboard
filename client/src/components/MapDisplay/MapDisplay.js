@@ -16,17 +16,18 @@ const pinPoint = new Icon({
     iconSize: [25, 25],
 });
 
-const MapDisplay = ({ search, allCountries, setAllCountries }) => {
+const MapDisplay = ({ search, allCountries, setAllCountries, setRankedCountries }) => {
     const classes = useStyles();
 
     useEffect(() => {
         const getData = async () => {
             const data = await getAllCountries();
-            const rankedData = rankAllCountries(data, `cases`);
-            setAllCountries(rankedData);
+            const { sorted, rankedObj } = rankAllCountries(data, `cases`);
+            setAllCountries(sorted);
+            setRankedCountries(rankedObj);
         };
         getData();
-    }, [setAllCountries]);
+    }, [setAllCountries, setRankedCountries]);
 
     const handleOnDisplayData = (country) => {
         if (typeof search === "function") {

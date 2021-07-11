@@ -9,7 +9,7 @@ import { Link } from "react-router-dom";
 import useRouter from "use-react-router";
 import * as api from "../../api/index";
 
-const DataDisplay = ({ allCountries }) => {
+const DataDisplay = ({ rankedCountries }) => {
     const [countryTotals, setCountryTotals] = useState({});
     const [countryHistory, setCountryHistory] = useState([]);
 
@@ -50,6 +50,7 @@ const DataDisplay = ({ allCountries }) => {
                                     country={searchCountry}
                                     countryFlag={countryTotals.countryInfo.flag}
                                     updated={countryTotals.updated}
+                                    rank={rankedCountries[searchCountry]}
                                 />
                             )}
                         </Paper>
