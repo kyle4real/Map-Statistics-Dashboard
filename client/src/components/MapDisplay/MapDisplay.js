@@ -1,8 +1,9 @@
 import { useEffect } from "react";
-import { makeStyles, Container, Typography, Button } from "@material-ui/core";
+import { makeStyles, Container, Typography, Button, Grid } from "@material-ui/core";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import { Icon } from "leaflet";
 import pinSVG from "../../pin.svg";
+import Rankings from "./Rankings/Rankings";
 
 import { rankAllCountries } from "../../ranking/ranking";
 import { getAllCountries } from "../../api";
@@ -36,53 +37,60 @@ const MapDisplay = ({ search, allCountries, setAllCountries }) => {
     return (
         <div className={classes.map}>
             <Container maxWidth="md">
-                <MapContainer center={[0, 0]} zoom={1.2} className="leaflet-container">
-                    <TileLayer url={tiles} attribution={attr}></TileLayer>
-                    {allCountries.map((country) => (
-                        <Marker
-                            key={country.countryInfo._id || country.country.split(" ")[0]}
-                            position={[country.countryInfo.lat, country.countryInfo.long]}
-                            icon={pinPoint}
-                        >
-                            <Popup>
-                                <div className={classes.popup}>
-                                    <Typography
-                                        variant="h6"
-                                        component="h1"
-                                        color="textPrimary"
-                                        className={classes.cases}
-                                    >
-                                        {country.country}
-                                    </Typography>
-                                    <Typography
-                                        variant="body2"
-                                        component="h2"
-                                        color="textPrimary"
-                                        className={classes.cases}
-                                    >
-                                        Cases: {country.cases}
-                                    </Typography>
-                                    <Typography
-                                        variant="body2"
-                                        component="h2"
-                                        color="textPrimary"
-                                        className={classes.deaths.toLocaleString()}
-                                    >
-                                        Deaths: {country.deaths}
-                                    </Typography>
-                                    <Button
-                                        color="primary"
-                                        variant="outlined"
-                                        size="small"
-                                        onClick={() => handleOnDisplayData(country.country)}
-                                    >
-                                        Display Data
-                                    </Button>
-                                </div>
-                            </Popup>
-                        </Marker>
-                    ))}
-                </MapContainer>
+                <Grid container spacing={2}>
+                    <Grid item xs={12} md={4} className={classes.gridHeight}>
+                        <Rankings allCountries={allCountries} />
+                    </Grid>
+                    <Grid item xs={12} md={8} className={classes.gridHeight}>
+                        <MapContainer center={[0, 0]} zoom={1.2} className="leaflet-container">
+                            <TileLayer url={tiles} attribution={attr}></TileLayer>
+                            {allCountries.map((country) => (
+                                <Marker
+                                    key={country.countryInfo._id || country.country.split(" ")[0]}
+                                    position={[country.countryInfo.lat, country.countryInfo.long]}
+                                    icon={pinPoint}
+                                >
+                                    <Popup>
+                                        <div className={classes.popup}>
+                                            <Typography
+                                                variant="h6"
+                                                component="h1"
+                                                color="textPrimary"
+                                                className={classes.cases}
+                                            >
+                                                {country.country}
+                                            </Typography>
+                                            <Typography
+                                                variant="body2"
+                                                component="h2"
+                                                color="textPrimary"
+                                                className={classes.cases}
+                                            >
+                                                Cases: {country.cases}
+                                            </Typography>
+                                            <Typography
+                                                variant="body2"
+                                                component="h2"
+                                                color="textPrimary"
+                                                className={classes.deaths.toLocaleString()}
+                                            >
+                                                Deaths: {country.deaths}
+                                            </Typography>
+                                            <Button
+                                                color="primary"
+                                                variant="outlined"
+                                                size="small"
+                                                onClick={() => handleOnDisplayData(country.country)}
+                                            >
+                                                Display Data
+                                            </Button>
+                                        </div>
+                                    </Popup>
+                                </Marker>
+                            ))}
+                        </MapContainer>
+                    </Grid>
+                </Grid>
             </Container>
         </div>
     );
@@ -92,6 +100,10 @@ const useStyles = makeStyles((theme) => ({
     map: {
         paddingTop: theme.spacing(0),
         paddingBottom: theme.spacing(8),
+    },
+    gridHeight: {
+        height: "50vh",
+        overflow: "auto",
     },
     popup: {
         paddingBottom: theme.spacing(1),
