@@ -3,14 +3,22 @@ import DataDisplay from "./components/DataDisplay/DataDisplay";
 import Map from "./components/MapDisplay/MapDisplay";
 import Hero from "./components/Hero/Hero";
 
+import { Switch, Route, Link } from "react-router-dom";
+
 const App = () => {
     return (
         <div>
             <Header />
             <main>
                 <Hero />
-                <DataDisplay />
-                {/* <Map /> */}
+                <Switch>
+                    <Route exact path="/">
+                        <Map />
+                    </Route>
+                    <Route path="/displaydata">
+                        <DataDisplay />
+                    </Route>
+                </Switch>
             </main>
         </div>
     );
