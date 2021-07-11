@@ -17,7 +17,6 @@ const pinPoint = new Icon({
 const MapDisplay = ({ search }) => {
     const classes = useStyles();
     const [allCountries, setAllCountries] = useState([]);
-    const [activeCountry, setActiveCountry] = useState(null);
 
     useEffect(() => {
         const getData = async () => {
@@ -84,7 +83,6 @@ const MapDisplay = ({ search }) => {
                     ))}
                 </MapContainer>
             </Container>
-            {activeCountry && activeCountry.country}
         </div>
     );
 };
