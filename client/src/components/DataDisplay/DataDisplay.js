@@ -1,13 +1,32 @@
-import { makeStyles, Container, Typography, Grid, Paper } from "@material-ui/core";
+import { useState, useEffect } from "react";
+import { makeStyles, Container, Grid, Paper } from "@material-ui/core";
 import DataGraph from "./DataGraph/DataGraph";
 import DataTotals from "./DataTotals/DataTotals";
 import useRouter from "use-react-router";
+
+import { getOneCountry } from "../../api/index";
 
 const DataDisplay = () => {
     const classes = useStyles();
     const { location } = useRouter();
     const params = new URLSearchParams(location.search);
     const searchCountry = params.get("country");
+
+    const [dataTotals, setDataTotals] = useState({});
+    const [currentCountry, setCurrentCountry] = useState(searchCountry);
+
+    useEffect(() => {
+        setDataTotals({});
+        const fetchDataTotals = async () => {
+            try {
+                const res = await getOneCountry(currentCountry);
+                setDataTotals(res);
+            } catch (error) {
+                console.log(error);
+            }
+        };
+        fetchDataTotals();
+    }, [currentCountry]);
 
     return (
         <div className={classes.displayData}>
