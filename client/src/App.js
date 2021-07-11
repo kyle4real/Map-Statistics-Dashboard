@@ -7,7 +7,11 @@ import useRouter from "use-react-router";
 import { Switch, Route } from "react-router-dom";
 
 const App = () => {
-    const { history } = useRouter();
+    const { location, history } = useRouter();
+    // const params = new URLSearchParams(location.search);
+    // const searchCountry = params.get("country");
+
+    // console.log(searchCountry);
 
     const search = (country) => {
         const urlEncodedCountry = encodeURI(country);

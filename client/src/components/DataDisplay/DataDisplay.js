@@ -1,9 +1,14 @@
 import { makeStyles, Container, Typography, Grid, Paper } from "@material-ui/core";
 import DataGraph from "./DataGraph/DataGraph";
 import DataTotals from "./DataTotals/DataTotals";
+import useRouter from "use-react-router";
 
 const DataDisplay = () => {
     const classes = useStyles();
+    const { location } = useRouter();
+    const params = new URLSearchParams(location.search);
+    const searchCountry = params.get("country");
+
     return (
         <div className={classes.displayData}>
             <Container maxWidth="md">
