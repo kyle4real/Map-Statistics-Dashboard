@@ -7,9 +7,9 @@ import DataHeader from "./DataHeader/DataHeader";
 import { ArrowBack as ArrowBackIcon } from "@material-ui/icons";
 import { Link } from "react-router-dom";
 import useRouter from "use-react-router";
-import * as api from "../../api/index";
+import { getOneCountry } from "../../api/index";
 
-const DataDisplay = ({ rankedCountries }) => {
+const DataDisplay = () => {
     const [countryTotals, setCountryTotals] = useState({});
     const [countryHistory, setCountryHistory] = useState([]);
 
@@ -21,7 +21,7 @@ const DataDisplay = ({ rankedCountries }) => {
     useEffect(() => {
         const getTotals = async () => {
             try {
-                const totals = await api.getOneCountry(searchCountry);
+                const totals = await getOneCountry(searchCountry);
                 setCountryTotals(totals);
             } catch (error) {
                 console.log(error);
@@ -29,6 +29,8 @@ const DataDisplay = ({ rankedCountries }) => {
         };
         getTotals();
     }, [searchCountry]);
+
+    useEffect(() => {}, []);
 
     return (
         <div className={classes.displayData}>
@@ -50,7 +52,6 @@ const DataDisplay = ({ rankedCountries }) => {
                                     country={searchCountry}
                                     countryFlag={countryTotals.countryInfo.flag}
                                     updated={countryTotals.updated}
-                                    rank={rankedCountries[searchCountry]}
                                 />
                             )}
                         </Paper>

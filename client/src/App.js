@@ -9,7 +9,7 @@ import { Switch, Route } from "react-router-dom";
 
 const App = () => {
     const [allCountries, setAllCountries] = useState([]);
-    const [rankedCountries, setRankedCountries] = useState([]);
+
     const { history } = useRouter();
 
     const search = (country) => {
@@ -28,11 +28,10 @@ const App = () => {
                             search={search}
                             allCountries={allCountries}
                             setAllCountries={setAllCountries}
-                            setRankedCountries={setRankedCountries}
                         />
                     </Route>
                     <Route path="/displaydata">
-                        <DataDisplay rankedCountries={rankedCountries} />
+                        <DataDisplay />
                     </Route>
                 </Switch>
             </main>

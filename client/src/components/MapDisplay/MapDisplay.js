@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { makeStyles, Container, Typography, Button, Grid } from "@material-ui/core";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import { Icon } from "leaflet";
@@ -16,18 +16,17 @@ const pinPoint = new Icon({
     iconSize: [25, 25],
 });
 
-const MapDisplay = ({ search, allCountries, setAllCountries, setRankedCountries }) => {
+const MapDisplay = ({ search, allCountries, setAllCountries }) => {
     const classes = useStyles();
 
     useEffect(() => {
         const getData = async () => {
             const data = await getAllCountries();
-            const { sorted, rankedObj } = rankAllCountries(data, `cases`);
+            const { sorted } = rankAllCountries(data, `cases`);
             setAllCountries(sorted);
-            setRankedCountries(rankedObj);
         };
         getData();
-    }, [setAllCountries, setRankedCountries]);
+    }, [setAllCountries]);
 
     const handleOnDisplayData = (country) => {
         if (typeof search === "function") {

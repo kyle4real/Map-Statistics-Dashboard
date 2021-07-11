@@ -1,10 +1,25 @@
+import { useEffect, useState } from "react";
 import { makeStyles, Container, Typography, Button, Box } from "@material-ui/core";
 import Title from "../Title";
+
+import { rankAllCountries } from "../../../ranking/ranking";
+import { getAllCountries } from "../../../api";
 
 import moment from "moment";
 
 const DataHeader = ({ country, countryFlag, updated, rank }) => {
     const classes = useStyles();
+    const [rankedCountries, setRankedCountries] = useState([]);
+
+    useEffect(() => {
+        const getData = async () => {
+            const data = await getAllCountries();
+            const { rankedObj } = rankAllCountries(data, `cases`);
+            setRankedCountries(rankedObj);
+        };
+        getData();
+    }, []);
+
     return (
         <div className={classes.dataHeader}>
             <div style={{ display: "flex", alignItems: "center" }}>
@@ -24,7 +39,7 @@ const DataHeader = ({ country, countryFlag, updated, rank }) => {
                 </Typography>
             </div>
             <div className={classes.rankContainer}>
-                <Title>Rank #{rank}</Title>
+                <Title>Ranked #{rankedCountries[country]}</Title>
                 <Typography
                     variant="body2"
                     component="p"
