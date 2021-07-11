@@ -69,9 +69,7 @@ const MapDisplay = () => {
                                         variant="outlined"
                                         size="small"
                                         onClick={() => {
-                                            if (country.country !== activeCountry.country) {
-                                                setActiveCountry(country);
-                                            }
+                                            setActiveCountry(country);
                                         }}
                                     >
                                         Display Data
