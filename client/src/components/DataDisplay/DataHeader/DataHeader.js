@@ -1,11 +1,10 @@
 import { makeStyles, Container, Typography, Button } from "@material-ui/core";
 import Title from "../Title";
 
-const lastUpdate = "July 11, 2021, 16:55 GMT";
+import moment from "moment";
 
-const DataHeader = ({ country, countryFlag }) => {
+const DataHeader = ({ country, countryFlag, updated }) => {
     const classes = useStyles();
-    console.log(new Date(1626013892968));
     return (
         <div className={classes.dataHeader}>
             <div style={{ display: "flex", alignItems: "center" }}>
@@ -16,7 +15,7 @@ const DataHeader = ({ country, countryFlag }) => {
             </div>
             <div>
                 <Typography variant="body2" color="textSecondary">
-                    Last updated: {lastUpdate}
+                    Last updated: {moment(updated).format("MMMM Do YYYY, h:mm:ss a")}
                 </Typography>
             </div>
         </div>

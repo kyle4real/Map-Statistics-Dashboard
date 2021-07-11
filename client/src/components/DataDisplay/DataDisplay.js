@@ -45,10 +45,13 @@ const DataDisplay = () => {
                     {/* DATA HEADER */}
                     <Grid item xs={12}>
                         <Paper className={`${classes.paperHeaderHeight}`}>
-                            <DataHeader
-                                country={searchCountry}
-                                countryFlag={countryTotals.countryInfo.flag}
-                            />
+                            {Object.keys(countryTotals).length !== 0 && (
+                                <DataHeader
+                                    country={searchCountry}
+                                    countryFlag={countryTotals.countryInfo.flag}
+                                    updated={countryTotals.updated}
+                                />
+                            )}
                         </Paper>
                     </Grid>
                     {/* DATA GRAPH */}
