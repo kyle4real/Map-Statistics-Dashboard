@@ -9,7 +9,8 @@ const App = () => {
             <Header />
             <main>
                 <Hero />
-                <Map />
+                <DataDisplay />
+                {/* <Map /> */}
             </main>
         </div>
     );
