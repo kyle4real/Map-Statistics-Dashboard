@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { makeStyles, Container, Typography, Button } from "@material-ui/core";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import { Icon } from "leaflet";
@@ -25,7 +25,7 @@ const MapDisplay = ({ search, allCountries, setAllCountries }) => {
             setAllCountries(rankedData);
         };
         getData();
-    }, []);
+    }, [setAllCountries]);
 
     const handleOnDisplayData = (country) => {
         if (typeof search === "function") {

@@ -30,7 +30,7 @@ const DataTotals = ({ country, cases, deaths, recovered, active }) => {
                 <Table>
                     <TableBody>
                         {rows.map((row) => (
-                            <TableRow>
+                            <TableRow key={row.id}>
                                 <TableCell component="th" scope="row">
                                     {row.key.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
                                 </TableCell>
