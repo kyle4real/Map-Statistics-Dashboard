@@ -40,7 +40,9 @@ const DataDisplay = () => {
                     {/* DATA FIELDS */}
                     <Grid item xs={12} md={4}>
                         <Paper className={`${classes.paper} ${classes.paperFixedHeight}`}>
-                            <DataTotals {...countryTotals} />
+                            {Object.keys(countryTotals).length !== 0 && (
+                                <DataTotals {...countryTotals} />
+                            )}
                         </Paper>
                     </Grid>
                 </Grid>
