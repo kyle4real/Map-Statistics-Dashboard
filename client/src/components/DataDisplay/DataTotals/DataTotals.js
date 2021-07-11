@@ -13,20 +13,32 @@ const createData = (id, key, value) => {
     return { id, key, value };
 };
 
-const DataTotals = ({ country, cases, deaths, recovered, active }) => {
+const DataTotals = ({
+    country,
+    cases,
+    deaths,
+    recovered,
+    active,
+    casesPerOneMillion,
+    deathsPerOneMillion,
+}) => {
     const classes = useStyles();
 
     const rows = [
         createData(0, "Cases", cases),
         createData(1, "Deaths", deaths),
         createData(2, "Recovered", recovered),
-        createData(3, "Active", active),
+        createData(3, "Active Cases", active),
+        createData(4, "Cases Per One Million", casesPerOneMillion),
+        createData(5, "Deaths Per One Million", deathsPerOneMillion),
     ];
 
     return (
         <div className={classes.dataTotals}>
-            <Title>{country}</Title>
-            <TableContainer>
+            <div>
+                <Title>{country} Totals</Title>
+            </div>
+            <TableContainer className={classes.table}>
                 <Table>
                     <TableBody>
                         {rows.map((row) => (
@@ -47,7 +59,12 @@ const DataTotals = ({ country, cases, deaths, recovered, active }) => {
 };
 
 const useStyles = makeStyles((theme) => ({
-    dataTotals: {},
+    table: {
+        marginTop: theme.spacing(0.5),
+    },
+    titleCell: {
+        fontWeight: 600,
+    },
 }));
 
 export default DataTotals;

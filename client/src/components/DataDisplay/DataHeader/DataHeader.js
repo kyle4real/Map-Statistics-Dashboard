@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { makeStyles, Container, Typography, Button, Box } from "@material-ui/core";
+import { makeStyles, Typography } from "@material-ui/core";
 import Title from "../Title";
 
 import { rankAllCountries } from "../../../ranking/ranking";
