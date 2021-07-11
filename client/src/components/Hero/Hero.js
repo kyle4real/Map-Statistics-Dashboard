@@ -1,10 +1,18 @@
-import { makeStyles, Container, Typography } from "@material-ui/core";
+import { makeStyles, Container, Typography, Button } from "@material-ui/core";
+import { ArrowBack as ArrowBackIcon } from "@material-ui/icons";
 
-const Hero = () => {
+// TEMP
+const country = "United States";
+
+const Hero = ({ displayData }) => {
     const classes = useStyles();
     return (
         <div className={classes.hero}>
-            <Container maxWidth="sm">
+            <Container maxWidth="md">
+                <Button>
+                    <ArrowBackIcon className={classes.backIcon} />
+                    &nbsp;Back to Map
+                </Button>
                 <Typography
                     component="h1"
                     variant="h2"
@@ -14,9 +22,16 @@ const Hero = () => {
                 >
                     Covid-19 Statistics
                 </Typography>
-                <Typography component="p" variant="h5" align="center" color="textSecondary">
-                    Choose a country. Click 'display data'.
-                </Typography>
+                {!displayData && (
+                    <Typography component="p" variant="h5" align="center" color="textSecondary">
+                        Choose a country. Click 'display data'.
+                    </Typography>
+                )}
+                {displayData && (
+                    <Typography component="p" variant="h5" align="center" color="textSecondary">
+                        Displaying data for {country}
+                    </Typography>
+                )}
             </Container>
         </div>
     );
@@ -25,6 +40,9 @@ const Hero = () => {
 const useStyles = makeStyles((theme) => ({
     hero: {
         padding: theme.spacing(8, 0),
+    },
+    backIcon: {
+        width: 20,
     },
 }));
 
