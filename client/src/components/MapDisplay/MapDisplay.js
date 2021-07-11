@@ -38,11 +38,15 @@ const MapDisplay = ({ search, allCountries, setAllCountries }) => {
         <div className={classes.map}>
             <Container maxWidth="md">
                 <Grid container spacing={4} className={classes.grid}>
-                    <Grid item xs={12} md={4} className={classes.gridHeight}>
+                    <Grid item xs={12} md={5} className={classes.gridHeight}>
                         <Rankings allCountries={allCountries} />
                     </Grid>
-                    <Grid item xs={12} md={8} className={classes.gridHeight}>
-                        <MapContainer center={[0, 0]} zoom={1.2} className="leaflet-container">
+                    <Grid item xs={12} md={7} className={classes.gridHeight}>
+                        <MapContainer
+                            center={[0, 0]}
+                            zoom={1.2}
+                            className={`leaflet-container ${classes.leaflet}`}
+                        >
                             <TileLayer url={tiles} attribution={attr}></TileLayer>
                             {allCountries.map((country) => (
                                 <Marker
@@ -112,6 +116,9 @@ const useStyles = makeStyles((theme) => ({
         [theme.breakpoints.down("sm")]: {
             marginBottom: theme.spacing(2),
         },
+    },
+    leaflet: {
+        boxShadow: `0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24)`,
     },
     popup: {
         paddingBottom: theme.spacing(1),
