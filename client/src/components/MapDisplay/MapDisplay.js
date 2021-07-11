@@ -70,15 +70,21 @@ const MapDisplay = ({ search, allCountries, setAllCountries }) => {
                                                 color="textPrimary"
                                                 className={classes.cases}
                                             >
-                                                Cases: {country.cases}
+                                                Cases:{" "}
+                                                {country.cases
+                                                    .toString()
+                                                    .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
                                             </Typography>
                                             <Typography
                                                 variant="body2"
                                                 component="h2"
                                                 color="textPrimary"
-                                                className={classes.deaths.toLocaleString()}
+                                                className={classes.deaths}
                                             >
-                                                Deaths: {country.deaths}
+                                                Deaths:{" "}
+                                                {country.deaths
+                                                    .toString()
+                                                    .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
                                             </Typography>
                                             <Button
                                                 color="primary"
@@ -118,6 +124,7 @@ const useStyles = makeStyles((theme) => ({
         },
     },
     leaflet: {
+        overflow: "hidden",
         boxShadow: `0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24)`,
     },
     popup: {
