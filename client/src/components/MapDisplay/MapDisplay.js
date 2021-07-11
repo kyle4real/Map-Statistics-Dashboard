@@ -35,7 +35,7 @@ const MapDisplay = ({ search }) => {
     return (
         <div className={classes.map}>
             <Container maxWidth="md">
-                <MapContainer center={[45.4215, -75.6971]} zoom={4} className="leaflet-container">
+                <MapContainer center={[0, 0]} zoom={1.2} className="leaflet-container">
                     <TileLayer url={tiles} attribution={attr}></TileLayer>
                     {allCountries.map((country) => (
                         <Marker
@@ -89,7 +89,7 @@ const MapDisplay = ({ search }) => {
 
 const useStyles = makeStyles((theme) => ({
     map: {
-        paddingTop: theme.spacing(4),
+        paddingTop: theme.spacing(0),
         paddingBottom: theme.spacing(8),
     },
     popup: {

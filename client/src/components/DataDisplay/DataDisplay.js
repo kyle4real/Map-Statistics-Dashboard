@@ -1,9 +1,12 @@
 import { useState, useEffect } from "react";
-import { makeStyles, Container, Grid, Paper } from "@material-ui/core";
+import { makeStyles, Container, Grid, Paper, Button } from "@material-ui/core";
 import DataGraph from "./DataGraph/DataGraph";
 import DataTotals from "./DataTotals/DataTotals";
-import useRouter from "use-react-router";
+import DataHeader from "./DataHeader/DataHeader";
 
+import { ArrowBack as ArrowBackIcon } from "@material-ui/icons";
+import { Link } from "react-router-dom";
+import useRouter from "use-react-router";
 import * as api from "../../api/index";
 
 const DataDisplay = () => {
@@ -30,8 +33,22 @@ const DataDisplay = () => {
     return (
         <div className={classes.displayData}>
             <Container maxWidth="md">
+                <Link to="/" className={classes.backToMapLink}>
+                    <Button>
+                        <ArrowBackIcon className={classes.backIcon} />
+                        &nbsp;Back to Map
+                    </Button>
+                </Link>
+            </Container>
+            <Container maxWidth="md" className={classes.displayDataContainer}>
                 <Grid container spacing={3}>
-                    {/* GRAPH */}
+                    {/* DATA HEADER */}
+                    <Grid item xs={12}>
+                        <Paper className={`${classes.paperHeaderHeight}`}>
+                            <DataHeader country={searchCountry} />
+                        </Paper>
+                    </Grid>
+                    {/* DATA GRAPH */}
                     <Grid item xs={12} md={8}>
                         <Paper className={`${classes.paper} ${classes.paperFixedHeight}`}>
                             <DataGraph />
@@ -52,7 +69,16 @@ const DataDisplay = () => {
 };
 
 const useStyles = makeStyles((theme) => ({
-    displayData: {},
+    displayData: {
+        paddingTop: theme.spacing(4),
+        paddingBottom: theme.spacing(4),
+    },
+    displayDataContainer: {
+        paddingTop: theme.spacing(4),
+    },
+    paperHeaderHeight: {
+        height: "10vh",
+    },
     paperFixedHeight: {
         height: "50vh",
     },
@@ -61,6 +87,12 @@ const useStyles = makeStyles((theme) => ({
         display: "flex",
         overflow: "auto",
         flexDirection: "column",
+    },
+    backToMapLink: {
+        textDecoration: "none",
+    },
+    backIcon: {
+        width: 20,
     },
 }));
 

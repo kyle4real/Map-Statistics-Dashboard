@@ -24,7 +24,6 @@ const App = () => {
                         <MapDisplay search={search} />
                     </Route>
                     <Route path="/displaydata">
-                        <Hero displayData />
                         <DataDisplay />
                     </Route>
                 </Switch>
