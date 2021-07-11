@@ -37,7 +37,7 @@ const MapDisplay = ({ search, allCountries, setAllCountries }) => {
     return (
         <div className={classes.map}>
             <Container maxWidth="md">
-                <Grid container spacing={2}>
+                <Grid container spacing={4} className={classes.grid}>
                     <Grid item xs={12} md={4} className={classes.gridHeight}>
                         <Rankings allCountries={allCountries} />
                     </Grid>
@@ -101,9 +101,17 @@ const useStyles = makeStyles((theme) => ({
         paddingTop: theme.spacing(0),
         paddingBottom: theme.spacing(8),
     },
+    grid: {
+        [theme.breakpoints.down("sm")]: {
+            flexDirection: "column-reverse",
+        },
+    },
     gridHeight: {
-        height: "50vh",
+        maxHeight: "50vh",
         overflow: "auto",
+        [theme.breakpoints.down("sm")]: {
+            marginBottom: theme.spacing(2),
+        },
     },
     popup: {
         paddingBottom: theme.spacing(1),
