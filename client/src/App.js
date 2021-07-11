@@ -30,7 +30,7 @@ const App = () => {
                         />
                     </Route>
                     <Route path="/displaydata">
-                        <DataDisplay />
+                        <DataDisplay allCountries={allCountries} />
                     </Route>
                 </Switch>
             </main>

@@ -5,9 +5,6 @@ import moment from "moment";
 
 const DataHeader = ({ country, countryFlag, updated }) => {
     const classes = useStyles();
-    console.log(moment(updated).format().slice(0, 10));
-    console.log(moment().format().slice(0, 10));
-    console.log(moment(updated).format().slice(0, 10) === moment().format().slice(0, 10));
     return (
         <div className={classes.dataHeader}>
             <div style={{ display: "flex", alignItems: "center" }}>

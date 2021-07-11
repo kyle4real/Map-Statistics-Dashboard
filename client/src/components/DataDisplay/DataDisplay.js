@@ -9,7 +9,7 @@ import { Link } from "react-router-dom";
 import useRouter from "use-react-router";
 import * as api from "../../api/index";
 
-const DataDisplay = () => {
+const DataDisplay = ({ allCountries }) => {
     const [countryTotals, setCountryTotals] = useState({});
     const [countryHistory, setCountryHistory] = useState([]);
 

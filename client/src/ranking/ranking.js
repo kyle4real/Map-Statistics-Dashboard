@@ -1,5 +1,8 @@
-export const rankAllCountries = (data) => {
-    let sorted = data.sort((a, b) => b.cases - a.cases);
-    sorted.forEach((country, index) => (country.rank = index + 1));
-    return data;
+export const rankAllCountries = (data, type) => {
+    let sorted = data.sort((a, b) => b[type] - a[type]);
+    sorted.forEach((country, index) => {
+        country.rank = index + 1;
+    });
+    console.log(sorted);
+    return sorted;
 };

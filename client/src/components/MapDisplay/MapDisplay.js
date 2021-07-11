@@ -22,7 +22,7 @@ const MapDisplay = ({ search, allCountries, setAllCountries }) => {
     useEffect(() => {
         const getData = async () => {
             const data = await getAllCountries();
-            const rankedData = rankAllCountries(data);
+            const rankedData = rankAllCountries(data, `cases`);
             setAllCountries(rankedData);
         };
         getData();
