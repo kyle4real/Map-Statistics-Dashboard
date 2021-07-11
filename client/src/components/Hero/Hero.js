@@ -1,5 +1,6 @@
 import { makeStyles, Container, Typography, Button } from "@material-ui/core";
 import { ArrowBack as ArrowBackIcon } from "@material-ui/icons";
+import { Link } from "react-router-dom";
 
 // TEMP
 const country = "United States";
@@ -9,10 +10,12 @@ const Hero = ({ displayData }) => {
     return (
         <div className={classes.hero}>
             <Container maxWidth="md">
-                <Button>
-                    <ArrowBackIcon className={classes.backIcon} />
-                    &nbsp;Back to Map
-                </Button>
+                <Link to="/" className={classes.backToMapLink}>
+                    <Button>
+                        <ArrowBackIcon className={classes.backIcon} />
+                        &nbsp;Back to Map
+                    </Button>
+                </Link>
                 <Typography
                     component="h1"
                     variant="h2"
@@ -40,6 +43,9 @@ const Hero = ({ displayData }) => {
 const useStyles = makeStyles((theme) => ({
     hero: {
         padding: theme.spacing(8, 0),
+    },
+    backToMapLink: {
+        textDecoration: "none",
     },
     backIcon: {
         width: 20,
