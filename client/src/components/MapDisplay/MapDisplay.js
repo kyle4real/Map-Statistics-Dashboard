@@ -14,7 +14,7 @@ const pinPoint = new Icon({
     iconSize: [25, 25],
 });
 
-const MapDisplay = () => {
+const MapDisplay = ({ search }) => {
     const classes = useStyles();
     const [allCountries, setAllCountries] = useState([]);
     const [activeCountry, setActiveCountry] = useState(null);
@@ -26,6 +26,12 @@ const MapDisplay = () => {
         };
         getData();
     }, []);
+
+    const handleOnDisplayData = (country) => {
+        if (typeof search === "function") {
+            search(country);
+        }
+    };
 
     return (
         <div className={classes.map}>
@@ -68,9 +74,7 @@ const MapDisplay = () => {
                                         color="primary"
                                         variant="outlined"
                                         size="small"
-                                        onClick={() => {
-                                            setActiveCountry(country);
-                                        }}
+                                        onClick={() => handleOnDisplayData(country.country)}
                                     >
                                         Display Data
                                     </Button>
@@ -87,7 +91,7 @@ const MapDisplay = () => {
 
 const useStyles = makeStyles((theme) => ({
     map: {
-        paddingTop: theme.spacing(8),
+        paddingTop: theme.spacing(4),
         paddingBottom: theme.spacing(8),
     },
     popup: {

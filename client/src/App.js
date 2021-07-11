@@ -1,11 +1,19 @@
 import Header from "./components/Header/Header";
 import DataDisplay from "./components/DataDisplay/DataDisplay";
-import Map from "./components/MapDisplay/MapDisplay";
+import MapDisplay from "./components/MapDisplay/MapDisplay";
 import Hero from "./components/Hero/Hero";
+import useRouter from "use-react-router";
 
 import { Switch, Route } from "react-router-dom";
 
 const App = () => {
+    const { history } = useRouter();
+
+    const search = (country) => {
+        const urlEncodedCountry = encodeURI(country);
+        history.push(`/displaydata?country=${urlEncodedCountry}`);
+    };
+
     return (
         <div>
             <Header />
@@ -13,7 +21,7 @@ const App = () => {
                 <Switch>
                     <Route exact path="/">
                         <Hero />
-                        <Map />
+                        <MapDisplay search={search} />
                     </Route>
                     <Route path="/displaydata">
                         <Hero displayData />

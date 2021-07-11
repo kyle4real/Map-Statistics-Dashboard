@@ -10,12 +10,14 @@ const Hero = ({ displayData }) => {
     return (
         <div className={classes.hero}>
             <Container maxWidth="md">
-                <Link to="/" className={classes.backToMapLink}>
-                    <Button>
-                        <ArrowBackIcon className={classes.backIcon} />
-                        &nbsp;Back to Map
-                    </Button>
-                </Link>
+                {displayData && (
+                    <Link to="/" className={classes.backToMapLink}>
+                        <Button>
+                            <ArrowBackIcon className={classes.backIcon} />
+                            &nbsp;Back to Map
+                        </Button>
+                    </Link>
+                )}
                 <Typography
                     component="h1"
                     variant="h2"
