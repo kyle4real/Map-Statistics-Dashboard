@@ -22,7 +22,7 @@ const DataHeader = ({ country, countryFlag, updated }) => {
                     {moment(updated).format().slice(0, 10) === moment().format().slice(0, 10) ? (
                         <i>{moment(updated).calendar()}</i>
                     ) : (
-                        moment(updated).format("MMMM Do YYYY, h:mm:ss a")
+                        <i>{moment(updated).format("MMMM Do YYYY, h:mm:ss a")}</i>
                     )}
                 </Typography>
             </div>

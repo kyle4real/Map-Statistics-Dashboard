@@ -4,6 +4,7 @@ import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import { Icon } from "leaflet";
 import pinSVG from "../../pin.svg";
 
+import { rankAllCountries } from "../../ranking/ranking";
 import { getAllCountries } from "../../api";
 
 const tiles = "http://stamen-tiles-{s}.a.ssl.fastly.net/toner/{z}/{x}/{y}.png";
@@ -14,14 +15,14 @@ const pinPoint = new Icon({
     iconSize: [25, 25],
 });
 
-const MapDisplay = ({ search }) => {
+const MapDisplay = ({ search, allCountries, setAllCountries }) => {
     const classes = useStyles();
-    const [allCountries, setAllCountries] = useState([]);
 
     useEffect(() => {
         const getData = async () => {
             const data = await getAllCountries();
-            setAllCountries(data);
+            const rankedData = rankAllCountries(data);
+            setAllCountries(rankedData);
         };
         getData();
     }, []);
