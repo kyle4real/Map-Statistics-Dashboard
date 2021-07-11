@@ -4,29 +4,28 @@ import DataGraph from "./DataGraph/DataGraph";
 import DataTotals from "./DataTotals/DataTotals";
 import useRouter from "use-react-router";
 
-import { getOneCountry } from "../../api/index";
+import * as api from "../../api/index";
 
 const DataDisplay = () => {
+    const [countryTotals, setCountryTotals] = useState({});
+    const [countryHistory, setCountryHistory] = useState([]);
+
     const classes = useStyles();
     const { location } = useRouter();
     const params = new URLSearchParams(location.search);
     const searchCountry = params.get("country");
 
-    const [dataTotals, setDataTotals] = useState({});
-    const [currentCountry, setCurrentCountry] = useState(searchCountry);
-
     useEffect(() => {
-        setDataTotals({});
-        const fetchDataTotals = async () => {
+        const getTotals = async () => {
             try {
-                const res = await getOneCountry(currentCountry);
-                setDataTotals(res);
+                const totals = await api.getOneCountry(searchCountry);
+                setCountryTotals(totals);
             } catch (error) {
                 console.log(error);
             }
         };
-        fetchDataTotals();
-    }, [currentCountry]);
+        getTotals();
+    }, [searchCountry]);
 
     return (
         <div className={classes.displayData}>
@@ -41,7 +40,7 @@ const DataDisplay = () => {
                     {/* DATA FIELDS */}
                     <Grid item xs={12} md={4}>
                         <Paper className={`${classes.paper} ${classes.paperFixedHeight}`}>
-                            <DataTotals />
+                            <DataTotals {...countryTotals} />
                         </Paper>
                     </Grid>
                 </Grid>
