@@ -20,7 +20,6 @@ const pinPoint = new Icon({
 const MapDisplay = ({ search, allCountries, setAllCountries }) => {
     const classes = useStyles();
     const [map, setMap] = useState(null);
-    const [coords, setCoords] = useState([0, 0]);
 
     useEffect(() => {
         const getData = async () => {
@@ -37,11 +36,9 @@ const MapDisplay = ({ search, allCountries, setAllCountries }) => {
         }
     };
 
-    const handleMapFocus = (lat, long) => {
-        map.flyTo([lat, long], 3);
+    const handleMapFocus = (coords) => {
+        map.flyTo(coords, 3);
     };
-
-    console.log(map);
 
     return (
         <div className={classes.map}>
@@ -127,10 +124,9 @@ const useStyles = makeStyles((theme) => ({
             flexDirection: "column-reverse",
         },
     },
-    rankings: {
-        maxHeight: "30vh",
-        overflow: "auto",
-    },
+    // rankings: {
+    //     maxHeight: "30vh",
+    // },
     popup: {
         paddingBottom: theme.spacing(1),
     },

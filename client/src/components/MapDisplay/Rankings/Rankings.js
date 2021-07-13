@@ -20,9 +20,12 @@ const Rankings = ({ allCountries, handleOnDisplayData, handleMapFocus }) => {
     return (
         <div className={classes.rankings}>
             {/* <Paper> */}
-            <TableContainer component={Paper}>
+            <TableContainer
+                component={Paper}
+                style={{ overflow: "auto", maxHeight: "35vh", position: "relative" }}
+            >
                 <Table>
-                    <TableHead>
+                    <TableHead style={{ position: "sticky", top: "0", zIndex: "100" }}>
                         <TableRow>
                             <HeaderTableCell>Country</HeaderTableCell>
                             <HeaderTableCell>
@@ -33,7 +36,7 @@ const Rankings = ({ allCountries, handleOnDisplayData, handleMapFocus }) => {
                                         justifyContent: "center",
                                     }}
                                 >
-                                    <img src={pinSVG} alt="pin" className={classes.pinSVG} />
+                                    <img src={pinSVG} alt="pinSVG" className={classes.pinSVG} />
                                 </div>
                             </HeaderTableCell>
                             <HeaderTableCell>
@@ -58,7 +61,7 @@ const Rankings = ({ allCountries, handleOnDisplayData, handleMapFocus }) => {
                                         <div className={classes.flagImgContainer}>
                                             <img
                                                 src={country.countryInfo.flag}
-                                                alt=""
+                                                alt={`${country.country} flag`}
                                                 className={classes.flagImg}
                                             />
                                         </div>
@@ -70,10 +73,10 @@ const Rankings = ({ allCountries, handleOnDisplayData, handleMapFocus }) => {
                                         color="primary"
                                         size="small"
                                         onClick={() =>
-                                            handleMapFocus(
+                                            handleMapFocus([
                                                 country.countryInfo.lat,
-                                                country.countryInfo.long
-                                            )
+                                                country.countryInfo.long,
+                                            ])
                                         }
                                     >
                                         Map Focus
@@ -104,6 +107,7 @@ const HeaderTableCell = withStyles((theme) => ({
     head: {
         backgroundColor: theme.palette.common.black,
         color: theme.palette.common.white,
+        padding: `10px 12px`,
     },
     body: {
         fontSize: 14,

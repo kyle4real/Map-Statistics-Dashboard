@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import Header from "./components/Header/Header";
 import DataDisplay from "./components/DataDisplay/DataDisplay";
 import MapDisplay from "./components/MapDisplay/MapDisplay";
-import Hero from "./components/Hero/Hero";
 import useRouter from "use-react-router";
 
 import { Switch, Route } from "react-router-dom";
