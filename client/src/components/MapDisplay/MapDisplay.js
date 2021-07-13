@@ -1,9 +1,10 @@
-import { useEffect } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { makeStyles, Container, Typography, Button, Grid } from "@material-ui/core";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import { Icon } from "leaflet";
 import pinSVG from "../../pin.svg";
 import Rankings from "./Rankings/Rankings";
+import { map } from "leaflet";
 
 import { rankAllCountries } from "../../ranking/ranking";
 import { getAllCountries } from "../../api";
@@ -18,6 +19,7 @@ const pinPoint = new Icon({
 
 const MapDisplay = ({ search, allCountries, setAllCountries }) => {
     const classes = useStyles();
+    const [coords, setCoords] = useState([0, 0]);
 
     useEffect(() => {
         const getData = async () => {
@@ -33,6 +35,13 @@ const MapDisplay = ({ search, allCountries, setAllCountries }) => {
             search(country);
         }
     };
+
+    // const handleMapFocus = (lat, long) => {};
+    const handleMapFocus = useCallback(() => {
+        map.setView([0, 0], 12);
+    }, []);
+
+    console.log(map);
 
     return (
         <div className={classes.map}>
@@ -91,7 +100,11 @@ const MapDisplay = ({ search, allCountries, setAllCountries }) => {
                 <Grid container spacing={0} className={classes.grid}>
                     <Grid item xs={12} md={6} className={classes.rankingsFilters}></Grid>
                     <Grid item xs={12} md={6} className={classes.rankings}>
-                        <Rankings allCountries={allCountries} />
+                        <Rankings
+                            allCountries={allCountries}
+                            handleOnDisplayData={handleOnDisplayData}
+                            handleMapFocus={handleMapFocus}
+                        />
                     </Grid>
                 </Grid>
             </Container>

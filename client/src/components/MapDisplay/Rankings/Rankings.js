@@ -1,4 +1,6 @@
 import React from "react";
+import pinSVG from "../../../pin.svg";
+import { ShowChart as ShowChartIcon } from "@material-ui/icons";
 
 import {
     makeStyles,
@@ -10,9 +12,10 @@ import {
     TableRow,
     TableCell,
     Paper,
+    Button,
 } from "@material-ui/core";
 
-const Rankings = ({ allCountries }) => {
+const Rankings = ({ allCountries, handleOnDisplayData, handleMapFocus }) => {
     const classes = useStyles();
     return (
         <div className={classes.rankings}>
@@ -21,17 +24,72 @@ const Rankings = ({ allCountries }) => {
                 <Table>
                     <TableHead>
                         <TableRow>
-                            <StyledTableCell>Country</StyledTableCell>
-                            <StyledTableCell align="right">Rank</StyledTableCell>
+                            <HeaderTableCell>Country</HeaderTableCell>
+                            <HeaderTableCell>
+                                <div
+                                    style={{
+                                        display: "flex",
+                                        alignItems: "center",
+                                        justifyContent: "center",
+                                    }}
+                                >
+                                    <img src={pinSVG} alt="pin" className={classes.pinSVG} />
+                                </div>
+                            </HeaderTableCell>
+                            <HeaderTableCell>
+                                <div
+                                    style={{
+                                        display: "flex",
+                                        alignItems: "center",
+                                        justifyContent: "center",
+                                    }}
+                                >
+                                    <ShowChartIcon />
+                                </div>
+                            </HeaderTableCell>
+                            <HeaderTableCell align="right">Rank</HeaderTableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
                         {allCountries.map((country) => (
                             <StyledTableRow key={country.rank}>
-                                <TableCell component="th" scope="row">
-                                    {country.country}
-                                </TableCell>
-                                <TableCell align="right">#{country.rank}</TableCell>
+                                <StyledTableCell component="th" scope="row">
+                                    <div className={classes.countryCell}>
+                                        <div className={classes.flagImgContainer}>
+                                            <img
+                                                src={country.countryInfo.flag}
+                                                alt=""
+                                                className={classes.flagImg}
+                                            />
+                                        </div>
+                                        {country.country}
+                                    </div>
+                                </StyledTableCell>
+                                <StyledTableCell>
+                                    <Button
+                                        color="primary"
+                                        size="small"
+                                        onClick={() =>
+                                            handleMapFocus(
+                                                country.countryInfo.lat,
+                                                country.countryInfo.long
+                                            )
+                                        }
+                                    >
+                                        Map Focus
+                                    </Button>
+                                </StyledTableCell>
+                                <StyledTableCell>
+                                    <Button
+                                        color="primary"
+                                        variant="outlined"
+                                        size="small"
+                                        onClick={() => handleOnDisplayData(country.country)}
+                                    >
+                                        Display Data
+                                    </Button>
+                                </StyledTableCell>
+                                <StyledTableCell align="right">#{country.rank}</StyledTableCell>
                             </StyledTableRow>
                         ))}
                     </TableBody>
@@ -42,13 +100,22 @@ const Rankings = ({ allCountries }) => {
     );
 };
 
-const StyledTableCell = withStyles((theme) => ({
+const HeaderTableCell = withStyles((theme) => ({
     head: {
         backgroundColor: theme.palette.common.black,
         color: theme.palette.common.white,
     },
     body: {
         fontSize: 14,
+    },
+}))(TableCell);
+
+const StyledTableCell = withStyles((theme) => ({
+    root: {
+        padding: 12,
+    },
+    body: {
+        fontSize: 12,
     },
 }))(TableCell);
 
@@ -62,6 +129,23 @@ const StyledTableRow = withStyles((theme) => ({
 
 const useStyles = makeStyles((theme) => ({
     rankings: {},
+    countryCell: {
+        display: "flex",
+        alignItems: "center",
+    },
+    flagImgContainer: {
+        width: 40,
+        marginRight: theme.spacing(2),
+    },
+    flagImg: {
+        width: "100%",
+        height: "auto",
+        boxShadow: `0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24)`,
+    },
+    pinSVG: {
+        width: 20,
+        height: 20,
+    },
 }));
 
 export default Rankings;
