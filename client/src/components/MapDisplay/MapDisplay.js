@@ -1,10 +1,10 @@
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState } from "react";
 import { makeStyles, Container, Typography, Button, Grid } from "@material-ui/core";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import { Icon } from "leaflet";
 import pinSVG from "../../pin.svg";
 import Rankings from "./Rankings/Rankings";
-import { map } from "leaflet";
+// import map from "leaflet";
 
 import { rankAllCountries } from "../../ranking/ranking";
 import { getAllCountries } from "../../api";
@@ -19,6 +19,7 @@ const pinPoint = new Icon({
 
 const MapDisplay = ({ search, allCountries, setAllCountries }) => {
     const classes = useStyles();
+    const [map, setMap] = useState(null);
     const [coords, setCoords] = useState([0, 0]);
 
     useEffect(() => {
@@ -36,16 +37,22 @@ const MapDisplay = ({ search, allCountries, setAllCountries }) => {
         }
     };
 
-    // const handleMapFocus = (lat, long) => {};
-    const handleMapFocus = useCallback(() => {
-        map.setView([0, 0], 12);
-    }, []);
+    const handleMapFocus = (lat, long) => {
+        map.flyTo([lat, long], 3);
+    };
 
     console.log(map);
 
     return (
         <div className={classes.map}>
-            <MapContainer center={[0, 0]} zoom={2} className="leaflet-container">
+            <MapContainer
+                center={[0, 0]}
+                zoom={2}
+                className="leaflet-container"
+                maxZoom={8}
+                minZoom={2}
+                whenCreated={setMap}
+            >
                 <TileLayer url={tiles} attribution={attr}></TileLayer>
                 {allCountries.map((country) => (
                     <Marker
