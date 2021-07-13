@@ -1,23 +1,49 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import Title from "../Title";
 import { getHistory } from "../../../api/index";
 import { Line } from "react-chartjs-2";
 
-import { makeStyles } from "@material-ui/core";
+import { makeStyles, Typography, Select, MenuItem, FormControl } from "@material-ui/core";
 
 const DataGraph = ({ country }) => {
     const classes = useStyles();
+    const [daysAmount, setDaysAmount] = useState();
 
     useEffect(() => {
         const getData = async () => {
             const data = await getHistory(country);
+            console.log(data);
         };
         getData();
-    }, []);
+    }, [country]);
 
     return (
         <>
-            <Title>Data Graph</Title>
+            <div className={classes.graphHeader}>
+                <Title>Data Graph</Title>
+                <Typography
+                    variant="body2"
+                    component="div"
+                    style={{ display: "flex", alignItems: "center" }}
+                >
+                    Last&nbsp;
+                    <FormControl className={classes.formControl}>
+                        <Select
+                            value={daysAmount}
+                            onChange={(e) => {
+                                setDaysAmount(e.target.value);
+                            }}
+                            style={{ textAlign: "center" }}
+                        >
+                            <MenuItem value={10}>10</MenuItem>
+                            <MenuItem value={50}>50</MenuItem>
+                            <MenuItem value={100}>100</MenuItem>
+                            <MenuItem value={365}>365</MenuItem>
+                        </Select>
+                    </FormControl>
+                    &nbsp;days
+                </Typography>
+            </div>
             <div className={classes.graphContainer}>
                 <Line
                     width={100}
@@ -42,8 +68,16 @@ const DataGraph = ({ country }) => {
 };
 
 const useStyles = makeStyles((theme) => ({
+    graphHeader: {
+        display: "flex",
+        justifyContent: "space-between",
+        alignItems: "center",
+    },
     graphContainer: {
         height: "100%",
+    },
+    formControl: {
+        minWidth: 80,
     },
     // lineGraph: {
     //     width: "100%",

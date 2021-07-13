@@ -59,7 +59,7 @@ const DataDisplay = () => {
                     {/* DATA GRAPH */}
                     <Grid item xs={12} md={8}>
                         <Paper className={`${classes.paper} ${classes.paperFixedHeight}`}>
-                            <DataGraph />
+                            <DataGraph country={searchCountry} />
                         </Paper>
                     </Grid>
                     {/* DATA FIELDS */}
