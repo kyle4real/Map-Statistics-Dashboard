@@ -36,69 +36,62 @@ const MapDisplay = ({ search, allCountries, setAllCountries }) => {
 
     return (
         <div className={classes.map}>
-            <Container maxWidth="md">
-                <Grid container spacing={4} className={classes.grid}>
-                    <Grid item xs={12} md={5} className={classes.gridHeight}>
-                        <Rankings allCountries={allCountries} />
-                    </Grid>
-                    <Grid item xs={12} md={7} className={classes.gridHeight}>
-                        <MapContainer
-                            center={[0, 0]}
-                            zoom={1.2}
-                            className={`leaflet-container ${classes.leaflet}`}
-                        >
-                            <TileLayer url={tiles} attribution={attr}></TileLayer>
-                            {allCountries.map((country) => (
-                                <Marker
-                                    key={country.countryInfo._id || country.country.split(" ")[0]}
-                                    position={[country.countryInfo.lat, country.countryInfo.long]}
-                                    icon={pinPoint}
+            <MapContainer center={[0, 0]} zoom={2} className="leaflet-container">
+                <TileLayer url={tiles} attribution={attr}></TileLayer>
+                {allCountries.map((country) => (
+                    <Marker
+                        key={country.countryInfo._id || country.country.split(" ")[0]}
+                        position={[country.countryInfo.lat, country.countryInfo.long]}
+                        icon={pinPoint}
+                    >
+                        <Popup>
+                            <div className={classes.popup}>
+                                <Typography
+                                    variant="h6"
+                                    component="h1"
+                                    color="textPrimary"
+                                    className={classes.cases}
                                 >
-                                    <Popup>
-                                        <div className={classes.popup}>
-                                            <Typography
-                                                variant="h6"
-                                                component="h1"
-                                                color="textPrimary"
-                                                className={classes.cases}
-                                            >
-                                                {country.country}
-                                            </Typography>
-                                            <Typography
-                                                variant="body2"
-                                                component="h2"
-                                                color="textPrimary"
-                                                className={classes.cases}
-                                            >
-                                                Cases:{" "}
-                                                {country.cases
-                                                    .toString()
-                                                    .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
-                                            </Typography>
-                                            <Typography
-                                                variant="body2"
-                                                component="h2"
-                                                color="textPrimary"
-                                                className={classes.deaths}
-                                            >
-                                                Deaths:{" "}
-                                                {country.deaths
-                                                    .toString()
-                                                    .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
-                                            </Typography>
-                                            <Button
-                                                color="primary"
-                                                variant="outlined"
-                                                size="small"
-                                                onClick={() => handleOnDisplayData(country.country)}
-                                            >
-                                                Display Data
-                                            </Button>
-                                        </div>
-                                    </Popup>
-                                </Marker>
-                            ))}
-                        </MapContainer>
+                                    {country.country}
+                                </Typography>
+                                <Typography
+                                    variant="body2"
+                                    component="h2"
+                                    color="textPrimary"
+                                    className={classes.cases}
+                                >
+                                    Cases:{" "}
+                                    {country.cases.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                                </Typography>
+                                <Typography
+                                    variant="body2"
+                                    component="h2"
+                                    color="textPrimary"
+                                    className={classes.deaths}
+                                >
+                                    Deaths:{" "}
+                                    {country.deaths
+                                        .toString()
+                                        .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                                </Typography>
+                                <Button
+                                    color="primary"
+                                    variant="outlined"
+                                    size="small"
+                                    onClick={() => handleOnDisplayData(country.country)}
+                                >
+                                    Display Data
+                                </Button>
+                            </div>
+                        </Popup>
+                    </Marker>
+                ))}
+            </MapContainer>
+            <Container maxWidth="lg">
+                <Grid container spacing={0} className={classes.grid}>
+                    <Grid item xs={12} md={6} className={classes.rankingsFilters}></Grid>
+                    <Grid item xs={12} md={6} className={classes.rankings}>
+                        <Rankings allCountries={allCountries} />
                     </Grid>
                 </Grid>
             </Container>
@@ -107,25 +100,16 @@ const MapDisplay = ({ search, allCountries, setAllCountries }) => {
 };
 
 const useStyles = makeStyles((theme) => ({
-    map: {
-        paddingTop: theme.spacing(0),
-        paddingBottom: theme.spacing(8),
-    },
     grid: {
+        marginTop: theme.spacing(4),
+        marginBottom: theme.spacing(4),
         [theme.breakpoints.down("sm")]: {
             flexDirection: "column-reverse",
         },
     },
-    gridHeight: {
-        maxHeight: "50vh",
+    rankings: {
+        maxHeight: "30vh",
         overflow: "auto",
-        [theme.breakpoints.down("sm")]: {
-            marginBottom: theme.spacing(2),
-        },
-    },
-    leaflet: {
-        overflow: "hidden",
-        boxShadow: `0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24)`,
     },
     popup: {
         paddingBottom: theme.spacing(1),

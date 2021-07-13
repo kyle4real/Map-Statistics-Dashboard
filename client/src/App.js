@@ -23,7 +23,7 @@ const App = () => {
             <main>
                 <Switch>
                     <Route exact path="/">
-                        <Hero />
+                        {/* <Hero /> */}
                         <MapDisplay
                             search={search}
                             allCountries={allCountries}
