@@ -7,15 +7,18 @@ import { makeStyles, Typography, Select, MenuItem, FormControl } from "@material
 
 const DataGraph = ({ country }) => {
     const classes = useStyles();
-    const [daysAmount, setDaysAmount] = useState();
+    const [daysAmount, setDaysAmount] = useState(10);
+    const [graphData, setGraphData] = useState({});
 
     useEffect(() => {
         const getData = async () => {
-            const data = await getHistory(country);
-            console.log(data);
+            const { timeline: dataObj } = await getHistory(country, daysAmount);
+            setGraphData(dataObj);
         };
         getData();
-    }, [country]);
+    }, [country, daysAmount]);
+
+    console.log(graphData);
 
     return (
         <>

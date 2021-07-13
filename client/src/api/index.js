@@ -12,7 +12,7 @@ export const getOneCountry = async (country) => {
     return data;
 };
 
-export const getHistory = async (country, days = 30) => {
-    const { data } = await axios.get(`${url}/historical/${country}?lastdays=${days}}`);
+export const getHistory = async (country, days = 10) => {
+    const { data } = await axios.get(`${url}/historical/${country}?lastdays=${days}`);
     return data;
 };
