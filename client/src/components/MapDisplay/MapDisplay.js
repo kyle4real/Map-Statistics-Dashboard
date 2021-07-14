@@ -46,7 +46,7 @@ const MapDisplay = ({ search, allCountries, setAllCountries }) => {
                 center={[0, 0]}
                 zoom={2}
                 className="leaflet-container"
-                maxZoom={8}
+                maxZoom={6}
                 minZoom={2}
                 whenCreated={setMap}
             >
@@ -102,8 +102,8 @@ const MapDisplay = ({ search, allCountries, setAllCountries }) => {
             </MapContainer>
             <Container maxWidth="lg">
                 <Grid container spacing={0} className={classes.grid}>
-                    <Grid item xs={12} md={6} className={classes.rankingsFilters}></Grid>
-                    <Grid item xs={12} md={6} className={classes.rankings}>
+                    <Grid item xs={12} md={4} className={classes.rankingsFilters}></Grid>
+                    <Grid item xs={12} md={8} className={classes.rankings}>
                         <Rankings
                             allCountries={allCountries}
                             handleOnDisplayData={handleOnDisplayData}

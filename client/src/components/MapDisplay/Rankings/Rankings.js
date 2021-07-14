@@ -92,7 +92,9 @@ const Rankings = ({ allCountries, handleOnDisplayData, handleMapFocus }) => {
                                         Display Data
                                     </Button>
                                 </StyledTableCell>
-                                <StyledTableCell align="right">#{country.rank}</StyledTableCell>
+                                <StyledTableCell align="right" style={{ textAlign: "right" }}>
+                                    #{country.rank}
+                                </StyledTableCell>
                             </StyledTableRow>
                         ))}
                     </TableBody>
@@ -120,6 +122,7 @@ const StyledTableCell = withStyles((theme) => ({
     },
     body: {
         fontSize: 12,
+        textAlign: "center",
     },
 }))(TableCell);
 
