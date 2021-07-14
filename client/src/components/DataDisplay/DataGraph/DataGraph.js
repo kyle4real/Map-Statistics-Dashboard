@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from "react";
 import Title from "../Title";
 import { getHistory } from "../../../api/index";
-import { Line } from "react-chartjs-2";
+import { Line, Bar } from "react-chartjs-2";
 
 import { makeStyles, Typography, Select, MenuItem, FormControl } from "@material-ui/core";
+
+import parseTheData from "../../../ranking/testing";
 
 const DataGraph = ({ country }) => {
     const classes = useStyles();
@@ -14,7 +16,6 @@ const DataGraph = ({ country }) => {
         const getData = async () => {
             const { timeline: dataObj } = await getHistory(country, daysAmount);
             setGraphData(dataObj);
-            console.log(dataObj);
         };
         getData();
     }, [country, daysAmount]);
@@ -51,24 +52,26 @@ const DataGraph = ({ country }) => {
                     width={100}
                     height={100}
                     data={{
-                        labels: Object.keys(graphData).length !== 0 && Object.keys(graphData.cases),
+                        labels:
+                            Object.keys(graphData).length !== 0 &&
+                            Object.keys(graphData.cases).slice(1),
                         datasets: [
                             {
-                                label: "cases",
+                                label: "new cases",
                                 data:
                                     Object.keys(graphData).length !== 0 &&
-                                    Object.values(graphData.cases),
+                                    parseTheData(graphData.cases),
                                 borderColor: "black",
-                                fill: true,
+                                fill: false,
                                 tension: 0.2,
                             },
                             {
                                 label: "deaths",
                                 data:
                                     Object.keys(graphData).length !== 0 &&
-                                    Object.values(graphData.deaths),
+                                    parseTheData(graphData.deaths),
                                 borderColor: "red",
-                                fill: true,
+                                fill: false,
                                 tension: 0.2,
                             },
                         ],

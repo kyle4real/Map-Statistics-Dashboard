@@ -1,9 +1,7 @@
 const testing = (data) => {
-    const cases = data.cases;
-    const keys = Object.keys(cases);
-    const values = Object.values(cases);
-    console.log(keys);
-    console.log(values);
+    const values = Object.values(data);
+    const mapped = values.map((curr, i) => curr - values[i - 1]).slice(1);
+    return mapped;
 };
 
 export default testing;
