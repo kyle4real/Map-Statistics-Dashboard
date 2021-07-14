@@ -14,11 +14,10 @@ const DataGraph = ({ country }) => {
         const getData = async () => {
             const { timeline: dataObj } = await getHistory(country, daysAmount);
             setGraphData(dataObj);
+            console.log(dataObj);
         };
         getData();
     }, [country, daysAmount]);
-
-    console.log(graphData);
 
     return (
         <>
@@ -52,11 +51,22 @@ const DataGraph = ({ country }) => {
                     width={100}
                     height={100}
                     data={{
-                        labels: ["Jan", "Feb", "March", "April"],
+                        labels: Object.keys(graphData).length !== 0 && Object.keys(graphData.cases),
                         datasets: [
                             {
-                                label: "# of votes",
-                                data: [12, 19, 3, 5, 2, 3],
+                                label: "cases",
+                                data:
+                                    Object.keys(graphData).length !== 0 &&
+                                    Object.values(graphData.cases),
+                                borderColor: "black",
+                                fill: true,
+                                tension: 0.2,
+                            },
+                            {
+                                label: "deaths",
+                                data:
+                                    Object.keys(graphData).length !== 0 &&
+                                    Object.values(graphData.deaths),
                                 borderColor: "red",
                                 fill: true,
                                 tension: 0.2,
