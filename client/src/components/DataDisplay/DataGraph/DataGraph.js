@@ -3,22 +3,33 @@ import Title from "../Title";
 import { getHistory } from "../../../api/index";
 import { Line, Bar } from "react-chartjs-2";
 
-import { makeStyles, Typography, Select, MenuItem, FormControl } from "@material-ui/core";
+import { makeStyles, Typography, MenuItem, FormControl, Slider } from "@material-ui/core";
 
-import parseTheData from "../../../ranking/testing";
+import parseTheData from "../../../ranking/parseTheData";
+import { convertToRange, unconvertRange } from "../../../ranking/convertToRange";
 
 const DataGraph = ({ country }) => {
     const classes = useStyles();
-    const [daysAmount, setDaysAmount] = useState(10);
+    const [range, setRange] = useState(null);
     const [graphData, setGraphData] = useState({});
 
     useEffect(() => {
         const getData = async () => {
-            const { timeline: dataObj } = await getHistory(country, daysAmount);
+            const { timeline: dataObj } = await getHistory(country, "all");
             setGraphData(dataObj);
+            const len = Object.keys(dataObj.cases).length;
+            setRange(convertToRange(len, 1, len));
         };
         getData();
-    }, [country, daysAmount]);
+    }, [country]);
+
+    const handleSlider = (e, n) => {
+        console.log(n);
+        setRange(n);
+    };
+
+    // console.log(range);
+    // console.log(unconvertRange(Object.keys(graphData.cases).length, 1, range));
 
     return (
         <>
@@ -29,22 +40,9 @@ const DataGraph = ({ country }) => {
                     component="div"
                     style={{ display: "flex", alignItems: "center" }}
                 >
-                    Last&nbsp;
                     <FormControl className={classes.formControl}>
-                        <Select
-                            value={daysAmount}
-                            onChange={(e) => {
-                                setDaysAmount(e.target.value);
-                            }}
-                            style={{ textAlign: "center" }}
-                        >
-                            <MenuItem value={10}>10</MenuItem>
-                            <MenuItem value={50}>50</MenuItem>
-                            <MenuItem value={100}>100</MenuItem>
-                            <MenuItem value={365}>365</MenuItem>
-                        </Select>
+                        <Slider value={range ? range : 100} onChange={handleSlider} />
                     </FormControl>
-                    &nbsp;days
                 </Typography>
             </div>
             <div className={classes.graphContainer}>
@@ -54,13 +52,31 @@ const DataGraph = ({ country }) => {
                     data={{
                         labels:
                             Object.keys(graphData).length !== 0 &&
-                            Object.keys(graphData.cases).slice(1),
+                            Object.keys(graphData.cases)
+                                .slice(1)
+                                .slice(
+                                    parseInt(
+                                        `-${unconvertRange(
+                                            Object.keys(graphData.cases).length,
+                                            1,
+                                            range
+                                        )}`
+                                    )
+                                ),
                         datasets: [
                             {
                                 label: "new cases",
                                 data:
                                     Object.keys(graphData).length !== 0 &&
-                                    parseTheData(graphData.cases),
+                                    parseTheData(graphData.cases).slice(
+                                        parseInt(
+                                            `-${unconvertRange(
+                                                Object.keys(graphData.cases).length,
+                                                1,
+                                                range
+                                            )}`
+                                        )
+                                    ),
                                 borderColor: "black",
                                 fill: false,
                                 tension: 0.2,
@@ -69,7 +85,15 @@ const DataGraph = ({ country }) => {
                                 label: "deaths",
                                 data:
                                     Object.keys(graphData).length !== 0 &&
-                                    parseTheData(graphData.deaths),
+                                    parseTheData(graphData.deaths).slice(
+                                        parseInt(
+                                            `-${unconvertRange(
+                                                Object.keys(graphData.cases).length,
+                                                1,
+                                                range
+                                            )}`
+                                        )
+                                    ),
                                 borderColor: "red",
                                 fill: false,
                                 tension: 0.2,
