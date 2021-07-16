@@ -56,7 +56,6 @@ const DataHeader = ({ country, countryFlag, updated, rank }) => {
 const useStyles = makeStyles((theme) => ({
     dataHeader: {
         height: "100%",
-        overflow: "hidden",
         display: "flex",
         flexWrap: "wrap",
         justifyContent: "space-between",
