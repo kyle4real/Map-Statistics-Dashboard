@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-import { makeStyles, Container, Typography, Button, Grid } from "@material-ui/core";
+import { makeStyles, Container, Typography, Button, Grid, IconButton } from "@material-ui/core";
+import { MenuOpen as MenuOpenIcon } from "@material-ui/icons";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import { Icon } from "leaflet";
 import pinSVG from "../../pin.svg";
@@ -20,6 +21,7 @@ const pinPoint = new Icon({
 const MapDisplay = ({ search, allCountries, setAllCountries }) => {
     const classes = useStyles();
     const [map, setMap] = useState(null);
+    const [showingFilters, setShowingFilters] = useState(false);
 
     useEffect(() => {
         const getData = async () => {
@@ -102,8 +104,12 @@ const MapDisplay = ({ search, allCountries, setAllCountries }) => {
             </MapContainer>
             <Container maxWidth="lg">
                 <Grid container spacing={0} className={classes.grid}>
-                    <Grid item xs={12} md={4} className={classes.rankingsFilters}></Grid>
-                    <Grid item xs={12} md={8} className={classes.rankings}>
+                    {/* <Grid item xs={12} md={showingFilters ? 4 : 1} className={classes.filterMenu}>
+                        <IconButton>
+                            <MenuOpenIcon className={classes.menuOpen} />
+                        </IconButton>
+                    </Grid> */}
+                    <Grid item xs={12} md={showingFilters ? 8 : 11} className={classes.rankings}>
                         <Rankings
                             allCountries={allCountries}
                             handleOnDisplayData={handleOnDisplayData}
@@ -124,9 +130,10 @@ const useStyles = makeStyles((theme) => ({
             flexDirection: "column-reverse",
         },
     },
-    // rankings: {
-    //     maxHeight: "30vh",
-    // },
+    filterMenu: {},
+    menuOpen: {
+        fontSize: "1.6rem",
+    },
     popup: {
         paddingBottom: theme.spacing(1),
     },
