@@ -135,14 +135,13 @@ const Rankings = ({ allCountries, handleOnDisplayData, handleMapFocus }) => {
                     </TableBody>
                 </Table>
             </TableContainer>
-            {/* </Paper> */}
         </div>
     );
 };
 
 const HeaderTableCell = withStyles((theme) => ({
     head: {
-        backgroundColor: theme.palette.common.black,
+        backgroundColor: theme.palette.primary.main,
         color: theme.palette.common.white,
         padding: `10px 12px`,
     },
@@ -171,7 +170,7 @@ const StyledTableRow = withStyles((theme) => ({
 
 const useStyles = makeStyles((theme) => ({
     tableContainer: {
-        height: "35vh",
+        maxHeight: "35vh",
     },
     tableHead: {
         position: "sticky",
