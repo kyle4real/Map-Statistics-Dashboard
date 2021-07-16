@@ -18,18 +18,15 @@ const DataGraph = ({ country }) => {
             const { timeline: dataObj } = await getHistory(country, "all");
             setGraphData(dataObj);
             const len = Object.keys(dataObj.cases).length;
-            setRange(convertToRange(len, 1, len));
+            // setRange(convertToRange(len, 1, len));
+            setRange(len);
         };
         getData();
     }, [country]);
 
     const handleSlider = (e, n) => {
-        console.log(n);
-        setRange(n);
+        setRange(unconvertRange(Object.keys(graphData.cases).length, 1, n));
     };
-
-    // console.log(range);
-    // console.log(unconvertRange(Object.keys(graphData.cases).length, 1, range));
 
     return (
         <>
@@ -41,7 +38,15 @@ const DataGraph = ({ country }) => {
                     style={{ display: "flex", alignItems: "center" }}
                 >
                     <FormControl className={classes.formControl}>
-                        <Slider value={range ? range : 100} onChange={handleSlider} />
+                        <Slider
+                            value={
+                                range
+                                    ? convertToRange(Object.keys(graphData.cases).length, 1, range)
+                                    : 0
+                            }
+                            onChange={handleSlider}
+                            min={2}
+                        />
                     </FormControl>
                 </Typography>
             </div>
@@ -54,29 +59,31 @@ const DataGraph = ({ country }) => {
                             Object.keys(graphData).length !== 0 &&
                             Object.keys(graphData.cases)
                                 .slice(1)
-                                .slice(
-                                    parseInt(
-                                        `-${unconvertRange(
-                                            Object.keys(graphData.cases).length,
-                                            1,
-                                            range
-                                        )}`
-                                    )
-                                ),
+                                .slice(parseInt(`-${range}`)),
+                        // .slice(
+                        //     parseInt(
+                        //         `-${unconvertRange(
+                        //             Object.keys(graphData.cases).length,
+                        //             1,
+                        //             range
+                        //         )}`
+                        //     )
+                        // )
                         datasets: [
                             {
                                 label: "new cases",
                                 data:
                                     Object.keys(graphData).length !== 0 &&
-                                    parseTheData(graphData.cases).slice(
-                                        parseInt(
-                                            `-${unconvertRange(
-                                                Object.keys(graphData.cases).length,
-                                                1,
-                                                range
-                                            )}`
-                                        )
-                                    ),
+                                    parseTheData(graphData.cases).slice(parseInt(`-${range}`)),
+                                // .slice(
+                                //     parseInt(
+                                //         `-${unconvertRange(
+                                //             Object.keys(graphData.cases).length,
+                                //             1,
+                                //             range
+                                //         )}`
+                                //     )
+                                // )
                                 borderColor: "black",
                                 fill: false,
                                 tension: 0.2,
@@ -85,15 +92,16 @@ const DataGraph = ({ country }) => {
                                 label: "deaths",
                                 data:
                                     Object.keys(graphData).length !== 0 &&
-                                    parseTheData(graphData.deaths).slice(
-                                        parseInt(
-                                            `-${unconvertRange(
-                                                Object.keys(graphData.cases).length,
-                                                1,
-                                                range
-                                            )}`
-                                        )
-                                    ),
+                                    parseTheData(graphData.deaths).slice(parseInt(`-${range}`)),
+                                // .slice(
+                                //     parseInt(
+                                //         `-${unconvertRange(
+                                //             Object.keys(graphData.cases).length,
+                                //             1,
+                                //             range
+                                //         )}`
+                                //     )
+                                // )
                                 borderColor: "red",
                                 fill: false,
                                 tension: 0.2,

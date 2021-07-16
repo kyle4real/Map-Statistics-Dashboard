@@ -4,6 +4,6 @@ export const convertToRange = (max, min, value) => {
 };
 
 export const unconvertRange = (max, min, value) => {
-    const newValue = Math.floor(((value - 0) * (max - min)) / (100 - 1) + 0);
+    const newValue = Math.floor(((value - 1) * (max - min)) / (100 - 1) + 1);
     return newValue;
 };
