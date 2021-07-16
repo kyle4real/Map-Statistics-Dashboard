@@ -11,7 +11,6 @@ import { getOneCountry } from "../../api/index";
 
 const DataDisplay = () => {
     const [countryTotals, setCountryTotals] = useState({});
-    const [countryHistory, setCountryHistory] = useState([]);
 
     const classes = useStyles();
     const { location } = useRouter();
@@ -34,7 +33,7 @@ const DataDisplay = () => {
 
     return (
         <div className={classes.displayData}>
-            <Container maxWidth="md">
+            <Container maxWidth="lg">
                 <Link to="/" className={classes.backToMapLink}>
                     <Button>
                         <ArrowBackIcon className={classes.backIcon} />
@@ -42,11 +41,11 @@ const DataDisplay = () => {
                     </Button>
                 </Link>
             </Container>
-            <Container maxWidth="md" className={classes.displayDataContainer}>
-                <Grid container spacing={3}>
+            <Container maxWidth="lg" className={classes.displayDataContainer}>
+                <Grid container spacing={4}>
                     {/* DATA HEADER */}
                     <Grid item xs={12}>
-                        <Paper className={`${classes.paperHeaderHeight}`}>
+                        <Paper className={classes.paperHeaderHeight}>
                             {Object.keys(countryTotals).length !== 0 && (
                                 <DataHeader
                                     country={searchCountry}
@@ -85,14 +84,16 @@ const useStyles = makeStyles((theme) => ({
         paddingTop: theme.spacing(4),
     },
     paperHeaderHeight: {
-        height: "10vh",
+        padding: theme.spacing(2),
+        minHeight: "10vh",
+        alignItems: "center",
+        display: "flex",
     },
     paperFixedHeight: {
         height: "50vh",
     },
     paper: {
         padding: theme.spacing(2),
-        display: "flex",
         overflow: "hidden",
         flexDirection: "column",
     },

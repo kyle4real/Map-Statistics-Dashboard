@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { makeStyles, Typography } from "@material-ui/core";
+import { makeStyles, Typography, Grid } from "@material-ui/core";
 import Title from "../Title";
 
 import { rankAllCountries } from "../../../ranking/ranking";
@@ -21,14 +21,14 @@ const DataHeader = ({ country, countryFlag, updated, rank }) => {
     }, []);
 
     return (
-        <div className={classes.dataHeader}>
-            <div style={{ display: "flex", alignItems: "center" }}>
+        <Grid container className={classes.dataHeader}>
+            <Grid item xs={12} md={4} className={classes.countryTag}>
                 <div className={classes.flagImgContainer}>
                     <img src={countryFlag} alt={`${country} flag`} className={classes.flagImg} />
                 </div>
                 <Title>{country}</Title>
-            </div>
-            <div>
+            </Grid>
+            <Grid item xs={12} md={4} className={classes.lastUpdate}>
                 <Typography variant="body2" color="textSecondary">
                     Last updated:&nbsp;
                     {moment(updated).format().slice(0, 10) === moment().format().slice(0, 10) ? (
@@ -37,8 +37,8 @@ const DataHeader = ({ country, countryFlag, updated, rank }) => {
                         <i>{moment(updated).format("MMMM Do YYYY, h:mm:ss a")}</i>
                     )}
                 </Typography>
-            </div>
-            <div className={classes.rankContainer}>
+            </Grid>
+            <Grid item xs={12} md={4} className={classes.ranked}>
                 <Title>Ranked #{rankedCountries[country]}</Title>
                 <Typography
                     variant="body2"
@@ -48,8 +48,8 @@ const DataHeader = ({ country, countryFlag, updated, rank }) => {
                 >
                     <i>in cases</i>
                 </Typography>
-            </div>
-        </div>
+            </Grid>
+        </Grid>
     );
 };
 
@@ -61,7 +61,6 @@ const useStyles = makeStyles((theme) => ({
         flexWrap: "wrap",
         justifyContent: "space-between",
         alignItems: "center",
-        padding: theme.spacing(2),
     },
     flagImgContainer: {
         width: 60,
@@ -72,8 +71,32 @@ const useStyles = makeStyles((theme) => ({
         height: "auto",
         boxShadow: `0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24)`,
     },
-    rankContainer: {
+    countryTag: {
+        display: "flex",
+        alignItems: "center",
+        [theme.breakpoints.down("sm")]: {
+            order: 1,
+            maxWidth: "50%",
+        },
+    },
+    lastUpdate: {
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        [theme.breakpoints.down("sm")]: {
+            order: 3,
+            marginTop: theme.spacing(3),
+        },
+    },
+    ranked: {
         position: "relative",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "flex-end",
+        [theme.breakpoints.down("sm")]: {
+            order: 2,
+            maxWidth: "50%",
+        },
     },
     footNote: {
         fontSize: "12px",
