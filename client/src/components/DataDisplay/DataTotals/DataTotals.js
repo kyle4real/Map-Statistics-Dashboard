@@ -1,6 +1,6 @@
 import React from "react";
 import Title from "../Title";
-import { makeStyles, Grid, Typography } from "@material-ui/core";
+import { makeStyles, Grid, Typography, Paper } from "@material-ui/core";
 
 const createData = (id, key, value) => {
     return { id, key, value };
@@ -33,7 +33,7 @@ const DataTotals = ({
             </div>
             <Grid container className={classes.gridContainer}>
                 {rows.map((row) => (
-                    <Grid item className={classes.gridItem}>
+                    <Grid item className={classes.gridItem} component={Paper}>
                         <Typography variant="body2">{row.key}</Typography>
                         <Typography variant="body2">
                             {row.value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
@@ -64,7 +64,7 @@ const useStyles = makeStyles((theme) => ({
         justifyContent: "space-between",
         alignItems: "center",
         // flex: 1,
-        boxShadow: "inset 0 0 6px rgba(0, 0, 0, 0.2)",
+        // boxShadow: "inset 0 0 6px rgba(0, 0, 0, 0.2)",
         padding: theme.spacing(2, 2),
         borderRadius: 5,
     },
