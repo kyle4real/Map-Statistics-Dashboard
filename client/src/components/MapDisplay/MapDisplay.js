@@ -1,11 +1,9 @@
 import { useEffect, useState } from "react";
-import { makeStyles, Container, Typography, Button, Grid, IconButton } from "@material-ui/core";
-import { MenuOpen as MenuOpenIcon } from "@material-ui/icons";
+import { makeStyles, Container, Typography, Button } from "@material-ui/core";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import { Icon } from "leaflet";
 import pinSVG from "../../pin.svg";
 import Rankings from "./Rankings/Rankings";
-// import map from "leaflet";
 
 import { rankAllCountries } from "../../ranking/ranking";
 import { getAllCountries } from "../../api";
@@ -21,7 +19,6 @@ const pinPoint = new Icon({
 const MapDisplay = ({ search, allCountries, setAllCountries }) => {
     const classes = useStyles();
     const [map, setMap] = useState(null);
-    const [showingFilters, setShowingFilters] = useState(false);
 
     useEffect(() => {
         const getData = async () => {
@@ -102,37 +99,21 @@ const MapDisplay = ({ search, allCountries, setAllCountries }) => {
                     </Marker>
                 ))}
             </MapContainer>
-            <Container maxWidth="lg">
-                <Grid container spacing={0} className={classes.grid}>
-                    {/* <Grid item xs={12} md={showingFilters ? 4 : 1} className={classes.filterMenu}>
-                        <IconButton>
-                            <MenuOpenIcon className={classes.menuOpen} />
-                        </IconButton>
-                    </Grid> */}
-                    <Grid item xs={12} md={showingFilters ? 8 : 11} className={classes.rankings}>
-                        <Rankings
-                            allCountries={allCountries}
-                            handleOnDisplayData={handleOnDisplayData}
-                            handleMapFocus={handleMapFocus}
-                        />
-                    </Grid>
-                </Grid>
+            <Container maxWidth="lg" className={classes.container}>
+                <Rankings
+                    allCountries={allCountries}
+                    handleOnDisplayData={handleOnDisplayData}
+                    handleMapFocus={handleMapFocus}
+                />
             </Container>
         </div>
     );
 };
 
 const useStyles = makeStyles((theme) => ({
-    grid: {
+    container: {
         marginTop: theme.spacing(4),
         marginBottom: theme.spacing(4),
-        [theme.breakpoints.down("sm")]: {
-            flexDirection: "column-reverse",
-        },
-    },
-    filterMenu: {},
-    menuOpen: {
-        fontSize: "1.6rem",
     },
     popup: {
         paddingBottom: theme.spacing(1),
