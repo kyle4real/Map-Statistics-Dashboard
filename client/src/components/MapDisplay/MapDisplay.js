@@ -18,6 +18,7 @@ const attr = `<a href="https://www.maptiler.com/copyright/" target="_blank">&cop
 const pinPoint = new Icon({
     iconUrl: pinSVG,
     iconSize: [20, 20],
+    popupAnchor: [1, -8],
 });
 
 const MapDisplay = ({ search, allCountries, setAllCountries }) => {
@@ -52,6 +53,7 @@ const MapDisplay = ({ search, allCountries, setAllCountries }) => {
     const handleMapFocus = (coords) => {
         if (!map) return;
         map.flyTo(coords, 3);
+        console.log(map.getMarker(coords));
     };
 
     return (
@@ -60,9 +62,10 @@ const MapDisplay = ({ search, allCountries, setAllCountries }) => {
                 center={[0, 0]}
                 zoom={2}
                 className="leaflet-container"
-                maxZoom={6}
+                maxZoom={8}
                 minZoom={2}
                 whenCreated={(mapInstance) => setMap(mapInstance)}
+                easeLinearity={0.5}
             >
                 <TileLayer url={tiles} attribution={attr}></TileLayer>
                 {allCountries.map((country) => (
@@ -73,42 +76,73 @@ const MapDisplay = ({ search, allCountries, setAllCountries }) => {
                     >
                         <Popup>
                             <div className={classes.popup}>
-                                <Typography
-                                    variant="h6"
-                                    component="h1"
-                                    color="textPrimary"
-                                    className={classes.cases}
-                                >
-                                    {country.country}
-                                </Typography>
-                                <Typography
-                                    variant="body2"
-                                    component="h2"
-                                    color="textPrimary"
-                                    className={classes.cases}
-                                >
-                                    Cases:{" "}
-                                    {country.cases.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
-                                </Typography>
-                                <Typography
-                                    variant="body2"
-                                    component="h2"
-                                    color="textPrimary"
-                                    className={classes.deaths}
-                                >
-                                    Deaths:{" "}
-                                    {country.deaths
-                                        .toString()
-                                        .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
-                                </Typography>
-                                <Button
-                                    color="primary"
-                                    variant="outlined"
-                                    size="small"
-                                    onClick={() => handleOnDisplayData(country.country)}
-                                >
-                                    Display Data
-                                </Button>
+                                <div className={classes.popupHead}>
+                                    <div className={classes.flagImgContainer}>
+                                        <img
+                                            src={country.countryInfo.flag}
+                                            alt={`${country.country} flag`}
+                                            className={classes.flagImg}
+                                        />
+                                    </div>
+                                    <Typography
+                                        variant="h6"
+                                        component="h1"
+                                        color="textPrimary"
+                                        className={classes.countryTag}
+                                    >
+                                        {country.country}
+                                    </Typography>
+                                </div>
+                                <div className={classes.popupBody}>
+                                    <div className={classes.cases}>
+                                        <Typography
+                                            variant="body1"
+                                            component="h4"
+                                            color="textPrimary"
+                                            className={classes.bodyTag}
+                                        >
+                                            Total Cases&nbsp;
+                                        </Typography>
+                                        <Typography
+                                            variant="body1"
+                                            component="h4"
+                                            color="textPrimary"
+                                        >
+                                            {country.cases
+                                                .toString()
+                                                .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                                        </Typography>
+                                    </div>
+                                    <div className={classes.deaths}>
+                                        <Typography
+                                            variant="body1"
+                                            component="h4"
+                                            color="textPrimary"
+                                            className={classes.bodyTag}
+                                        >
+                                            Deaths&nbsp;
+                                        </Typography>
+                                        <Typography
+                                            variant="body1"
+                                            component="h4"
+                                            color="textPrimary"
+                                        >
+                                            {country.deaths
+                                                .toString()
+                                                .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                                        </Typography>
+                                    </div>
+                                </div>
+                                <div className={classes.popupCTA}>
+                                    <Button
+                                        color="primary"
+                                        variant="outlined"
+                                        size="small"
+                                        onClick={() => handleOnDisplayData(country.country)}
+                                    >
+                                        Display Data
+                                    </Button>
+                                </div>
                             </div>
                         </Popup>
                     </Marker>
@@ -130,16 +164,52 @@ const useStyles = makeStyles((theme) => ({
         marginTop: theme.spacing(4),
         marginBottom: theme.spacing(4),
     },
-    popup: {
-        paddingBottom: theme.spacing(1),
+    popupHead: {
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        marginBottom: theme.spacing(1),
+    },
+    flagImgContainer: {
+        width: 40,
+        marginRight: theme.spacing(1),
+        display: "inherit",
+        alignItems: "inherit",
+    },
+    flagImg: {
+        width: "100%",
+        height: "auto",
+        boxShadow: `0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24)`,
+    },
+    popupBody: {
+        marginBottom: theme.spacing(1.5),
     },
     cases: {
-        marginTop: theme.spacing(1),
-        marginBottom: theme.spacing(1),
+        marginTop: theme.spacing(0.5),
+        marginBottom: theme.spacing(0.5),
+        padding: theme.spacing(0.4, 0.75),
+        boxShadow: "inset 0 0 6px rgba(0, 0, 0, 0.2);",
+        display: "flex",
+        justifyContent: "space-between",
+        alignItems: "center",
+        borderRadius: 5,
     },
     deaths: {
-        marginTop: theme.spacing(1),
-        marginBottom: theme.spacing(1),
+        marginTop: theme.spacing(0.5),
+        marginBottom: theme.spacing(0.5),
+        padding: theme.spacing(0.4, 0.75),
+        boxShadow: "inset 0 0 6px rgba(0, 0, 0, 0.2);",
+        display: "flex",
+        justifyContent: "space-between",
+        alignItems: "center",
+        borderRadius: 5,
+    },
+    bodyTag: {
+        marginRight: theme.spacing(2),
+    },
+    popupCTA: {
+        display: "flex",
+        justifyContent: "center",
     },
 }));
 

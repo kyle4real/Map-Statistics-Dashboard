@@ -99,7 +99,14 @@ const Rankings = ({ allCountries, handleOnDisplayData, handleMapFocus }) => {
                                                     className={classes.flagImg}
                                                 />
                                             </div>
-                                            {country.country}
+                                            <Typography
+                                                variant="h6"
+                                                component="h1"
+                                                color="textPrimary"
+                                                className={classes.countryTag}
+                                            >
+                                                {country.country}
+                                            </Typography>
                                         </div>
                                     </StyledTableCell>
                                     <StyledTableCell>
@@ -188,6 +195,8 @@ const useStyles = makeStyles((theme) => ({
     flagImgContainer: {
         width: 40,
         marginRight: theme.spacing(2),
+        display: "flex",
+        alignItems: "center",
     },
     flagImg: {
         width: "100%",

@@ -8,13 +8,18 @@
     --popup-BG: rgba(255, 255, 255, 0.95);
 }
 
-.leaflet-popup-content-wrapper {
+.leaflet-popup {
     background: var(--popup-BG);
-    border-radius: 2px;
+    border-radius: 4px;
+}
+
+.leaflet-popup-content-wrapper {
+    background: transparent;
+    box-shadow: none;
 }
 
 .leaflet-popup-content {
-    margin: 0 19px;
+    margin: 10px 14px;
 }
 
 .leaflet-popup-tip {
