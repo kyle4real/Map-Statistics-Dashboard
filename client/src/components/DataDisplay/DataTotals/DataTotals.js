@@ -1,13 +1,6 @@
 import React from "react";
 import Title from "../Title";
-import {
-    makeStyles,
-    TableContainer,
-    Table,
-    TableBody,
-    TableRow,
-    TableCell,
-} from "@material-ui/core";
+import { makeStyles, Grid, Typography } from "@material-ui/core";
 
 const createData = (id, key, value) => {
     return { id, key, value };
@@ -38,32 +31,42 @@ const DataTotals = ({
             <div>
                 <Title>{country} Totals</Title>
             </div>
-            <TableContainer className={classes.table}>
-                <Table>
-                    <TableBody>
-                        {rows.map((row) => (
-                            <TableRow key={row.id}>
-                                <TableCell component="th" scope="row">
-                                    {row.key.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
-                                </TableCell>
-                                <TableCell align="right">
-                                    {row.value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
-                                </TableCell>
-                            </TableRow>
-                        ))}
-                    </TableBody>
-                </Table>
-            </TableContainer>
+            <Grid container className={classes.gridContainer}>
+                {rows.map((row) => (
+                    <Grid item className={classes.gridItem}>
+                        <Typography variant="body2">{row.key}</Typography>
+                        <Typography variant="body2">
+                            {row.value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                        </Typography>
+                    </Grid>
+                ))}
+            </Grid>
         </div>
     );
 };
 
+// row.key.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+
 const useStyles = makeStyles((theme) => ({
-    table: {
-        marginTop: theme.spacing(0.5),
+    dataTotals: {
+        height: "100%",
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "space-between",
     },
-    titleCell: {
-        fontWeight: 600,
+    gridContainer: {
+        height: "90%",
+        flexDirection: "column",
+        justifyContent: "space-evenly",
+    },
+    gridItem: {
+        display: "flex",
+        justifyContent: "space-between",
+        alignItems: "center",
+        // flex: 1,
+        boxShadow: "inset 0 0 6px rgba(0, 0, 0, 0.2)",
+        padding: theme.spacing(2, 2),
+        borderRadius: 5,
     },
 }));
 
