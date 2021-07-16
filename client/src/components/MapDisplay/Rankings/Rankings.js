@@ -52,12 +52,9 @@ const Rankings = ({ allCountries, handleOnDisplayData, handleMapFocus }) => {
                     ),
                 }}
             />
-            <TableContainer
-                component={Paper}
-                style={{ overflow: "auto", height: "35vh", position: "relative" }}
-            >
+            <TableContainer component={Paper} className={classes.tableContainer} id="style-1">
                 <Table>
-                    <TableHead style={{ position: "sticky", top: "0", zIndex: "100" }}>
+                    <TableHead className={classes.tableHead}>
                         <TableRow>
                             <HeaderTableCell>Country</HeaderTableCell>
                             <HeaderTableCell>
@@ -173,12 +170,18 @@ const StyledTableRow = withStyles((theme) => ({
 }))(TableRow);
 
 const useStyles = makeStyles((theme) => ({
-    rankings: {},
+    tableContainer: {
+        height: "35vh",
+    },
+    tableHead: {
+        position: "sticky",
+        top: "0",
+        zIndex: "100",
+    },
     searchBox: {
         minWidth: "20%",
         marginBottom: theme.spacing(2),
     },
-    noResults: {},
     countryCell: {
         display: "flex",
         alignItems: "center",
