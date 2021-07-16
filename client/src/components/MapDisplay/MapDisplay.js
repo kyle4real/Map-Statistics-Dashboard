@@ -8,7 +8,12 @@ import Rankings from "./Rankings/Rankings";
 import { rankAllCountries } from "../../ranking/ranking";
 import { getAllCountries } from "../../api";
 
-const tiles = "http://stamen-tiles-{s}.a.ssl.fastly.net/toner/{z}/{x}/{y}.png";
+// const tiles = "http://stamen-tiles-{s}.a.ssl.fastly.net/terrain/{z}/{x}/{y}.png";
+// const tiles = "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png";
+// const tiles = "https://cartodb-basemaps-{s}.global.ssl.fastly.net/dark_all/{z}/{x}/{y}.png";
+const tiles = "https://api.maptiler.com/maps/hybrid/{z}/{x}/{y}.jpg?key=TdXXIQxlwnlyGAu8uAfW";
+// const tiles = "https://api.maptiler.com/maps/outdoor/{z}/{x}/{y}.png?key=TdXXIQxlwnlyGAu8uAfW";
+
 const attr = `Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>`;
 
 const pinPoint = new Icon({
