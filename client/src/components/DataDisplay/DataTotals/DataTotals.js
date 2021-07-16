@@ -29,7 +29,7 @@ const DataTotals = ({
     return (
         <div className={classes.dataTotals}>
             <div>
-                <Title>{country} Totals</Title>
+                <Title>Overall Totals</Title>
             </div>
             <Grid container className={classes.gridContainer}>
                 {rows.map((row) => (

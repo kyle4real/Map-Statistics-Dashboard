@@ -4,6 +4,10 @@
     padding: 0;
 }
 
+body {
+    user-select: none;
+}
+
 :root {
     --popup-BG: rgba(255, 255, 255, 0.95);
 }

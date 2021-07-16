@@ -31,7 +31,7 @@ const DataGraph = ({ country }) => {
     return (
         <div className={classes.dataGraph}>
             <div className={classes.graphHeader}>
-                <Title>Data Graph</Title>
+                <Title>Daily Totals</Title>
                 <Typography
                     variant="body2"
                     component="div"
