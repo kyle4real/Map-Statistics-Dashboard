@@ -17,7 +17,7 @@ const attr = `<a href="https://www.maptiler.com/copyright/" target="_blank">&cop
 
 const pinPoint = new Icon({
     iconUrl: pinSVG,
-    iconSize: [25, 25],
+    iconSize: [20, 20],
 });
 
 const MapDisplay = ({ search, allCountries, setAllCountries }) => {
