@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import pinSVG from "../../../pin.svg";
-import { ShowChart as ShowChartIcon } from "@material-ui/icons";
+import { ShowChart as ShowChartIcon, Search as SearchIcon } from "@material-ui/icons";
 
 import {
     makeStyles,
@@ -13,16 +13,48 @@ import {
     TableCell,
     Paper,
     Button,
+    TextField,
+    Typography,
+    InputAdornment,
 } from "@material-ui/core";
 
 const Rankings = ({ allCountries, handleOnDisplayData, handleMapFocus }) => {
     const classes = useStyles();
+    const [search, setSearch] = useState("");
+
+    const countriesFilter = (country) => {
+        if (search.length) {
+            return country.country.toLowerCase().includes(search.toLowerCase()) ? true : false;
+        } else {
+            return true;
+        }
+    };
+    const handleSearch = (value) => {
+        setSearch(value);
+    };
+
     return (
         <div className={classes.rankings}>
-            {/* <Paper> */}
+            <TextField
+                autoComplete="off"
+                autoCapitalize="words"
+                value={search}
+                onChange={(e) => {
+                    handleSearch(e.target.value);
+                }}
+                placeholder="Search Countries"
+                className={classes.searchBox}
+                InputProps={{
+                    startAdornment: (
+                        <InputAdornment position="start">
+                            <SearchIcon />
+                        </InputAdornment>
+                    ),
+                }}
+            />
             <TableContainer
                 component={Paper}
-                style={{ overflow: "auto", maxHeight: "35vh", position: "relative" }}
+                style={{ overflow: "auto", height: "35vh", position: "relative" }}
             >
                 <Table>
                     <TableHead style={{ position: "sticky", top: "0", zIndex: "100" }}>
@@ -54,49 +86,55 @@ const Rankings = ({ allCountries, handleOnDisplayData, handleMapFocus }) => {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {allCountries.map((country) => (
-                            <StyledTableRow key={country.rank}>
-                                <StyledTableCell component="th" scope="row">
-                                    <div className={classes.countryCell}>
-                                        <div className={classes.flagImgContainer}>
-                                            <img
-                                                src={country.countryInfo.flag}
-                                                alt={`${country.country} flag`}
-                                                className={classes.flagImg}
-                                            />
+                        {!allCountries.filter(countriesFilter).length ? (
+                            <div className={classes.noResults}>
+                                <Typography variant="h5">No Results</Typography>
+                            </div>
+                        ) : (
+                            allCountries.filter(countriesFilter).map((country) => (
+                                <StyledTableRow key={country.rank}>
+                                    <StyledTableCell component="th" scope="row">
+                                        <div className={classes.countryCell}>
+                                            <div className={classes.flagImgContainer}>
+                                                <img
+                                                    src={country.countryInfo.flag}
+                                                    alt={`${country.country} flag`}
+                                                    className={classes.flagImg}
+                                                />
+                                            </div>
+                                            {country.country}
                                         </div>
-                                        {country.country}
-                                    </div>
-                                </StyledTableCell>
-                                <StyledTableCell>
-                                    <Button
-                                        color="primary"
-                                        size="small"
-                                        onClick={() =>
-                                            handleMapFocus([
-                                                country.countryInfo.lat,
-                                                country.countryInfo.long,
-                                            ])
-                                        }
-                                    >
-                                        Map Focus
-                                    </Button>
-                                </StyledTableCell>
-                                <StyledTableCell>
-                                    <Button
-                                        color="primary"
-                                        variant="outlined"
-                                        size="small"
-                                        onClick={() => handleOnDisplayData(country.country)}
-                                    >
-                                        Display Data
-                                    </Button>
-                                </StyledTableCell>
-                                <StyledTableCell align="right" style={{ textAlign: "right" }}>
-                                    #{country.rank}
-                                </StyledTableCell>
-                            </StyledTableRow>
-                        ))}
+                                    </StyledTableCell>
+                                    <StyledTableCell>
+                                        <Button
+                                            color="primary"
+                                            size="small"
+                                            onClick={() =>
+                                                handleMapFocus([
+                                                    country.countryInfo.lat,
+                                                    country.countryInfo.long,
+                                                ])
+                                            }
+                                        >
+                                            Map Focus
+                                        </Button>
+                                    </StyledTableCell>
+                                    <StyledTableCell>
+                                        <Button
+                                            color="primary"
+                                            variant="outlined"
+                                            size="small"
+                                            onClick={() => handleOnDisplayData(country.country)}
+                                        >
+                                            Display Data
+                                        </Button>
+                                    </StyledTableCell>
+                                    <StyledTableCell align="right" style={{ textAlign: "right" }}>
+                                        #{country.rank}
+                                    </StyledTableCell>
+                                </StyledTableRow>
+                            ))
+                        )}
                     </TableBody>
                 </Table>
             </TableContainer>
@@ -136,6 +174,11 @@ const StyledTableRow = withStyles((theme) => ({
 
 const useStyles = makeStyles((theme) => ({
     rankings: {},
+    searchBox: {
+        minWidth: "20%",
+        marginBottom: theme.spacing(2),
+    },
+    noResults: {},
     countryCell: {
         display: "flex",
         alignItems: "center",
