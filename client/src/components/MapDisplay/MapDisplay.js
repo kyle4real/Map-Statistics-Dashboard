@@ -1,5 +1,5 @@
 import { useEffect, useState, useRef } from "react";
-import { makeStyles, Container, Typography, Button } from "@material-ui/core";
+import { makeStyles, Container, Typography, Button, Grid, Paper } from "@material-ui/core";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import { Icon } from "leaflet";
 import pinSVG from "../../pin.svg";
@@ -94,7 +94,7 @@ const MapDisplay = ({ search, allCountries, setAllCountries }) => {
                                     </Typography>
                                 </div>
                                 <div className={classes.popupBody}>
-                                    <div className={classes.cases}>
+                                    <Grid item className={classes.cases} component={Paper}>
                                         <Typography
                                             variant="body1"
                                             component="h4"
@@ -112,8 +112,8 @@ const MapDisplay = ({ search, allCountries, setAllCountries }) => {
                                                 .toString()
                                                 .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
                                         </Typography>
-                                    </div>
-                                    <div className={classes.deaths}>
+                                    </Grid>
+                                    <Grid item className={classes.deaths} component={Paper}>
                                         <Typography
                                             variant="body1"
                                             component="h4"
@@ -131,7 +131,7 @@ const MapDisplay = ({ search, allCountries, setAllCountries }) => {
                                                 .toString()
                                                 .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
                                         </Typography>
-                                    </div>
+                                    </Grid>
                                 </div>
                                 <div className={classes.popupCTA}>
                                     <Button
@@ -188,7 +188,7 @@ const useStyles = makeStyles((theme) => ({
         marginTop: theme.spacing(0.5),
         marginBottom: theme.spacing(0.5),
         padding: theme.spacing(0.4, 0.75),
-        boxShadow: "inset 0 0 6px rgba(0, 0, 0, 0.2);",
+        // boxShadow: "inset 0 0 6px rgba(0, 0, 0, 0.2)",
         display: "flex",
         justifyContent: "space-between",
         alignItems: "center",
@@ -198,7 +198,7 @@ const useStyles = makeStyles((theme) => ({
         marginTop: theme.spacing(0.5),
         marginBottom: theme.spacing(0.5),
         padding: theme.spacing(0.4, 0.75),
-        boxShadow: "inset 0 0 6px rgba(0, 0, 0, 0.2);",
+        // boxShadow: "inset 0 0 6px rgba(0, 0, 0, 0.2)",
         display: "flex",
         justifyContent: "space-between",
         alignItems: "center",
