@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { makeStyles, Container, Typography, Button } from "@material-ui/core";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import { Icon } from "leaflet";
@@ -13,8 +13,7 @@ import { getAllCountries } from "../../api";
 // const tiles = "https://cartodb-basemaps-{s}.global.ssl.fastly.net/dark_all/{z}/{x}/{y}.png";
 const tiles = "https://api.maptiler.com/maps/hybrid/{z}/{x}/{y}.jpg?key=TdXXIQxlwnlyGAu8uAfW";
 // const tiles = "https://api.maptiler.com/maps/outdoor/{z}/{x}/{y}.png?key=TdXXIQxlwnlyGAu8uAfW";
-
-const attr = `Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>`;
+const attr = `<a href="https://www.maptiler.com/copyright/" target="_blank">&copy; MapTiler</a> <a href="https://www.openstreetmap.org/copyright" target="_blank">&copy; OpenStreetMap contributors</a>`;
 
 const pinPoint = new Icon({
     iconUrl: pinSVG,
@@ -24,6 +23,7 @@ const pinPoint = new Icon({
 const MapDisplay = ({ search, allCountries, setAllCountries }) => {
     const classes = useStyles();
     const [map, setMap] = useState(null);
+    // const mapRef = useRef(null);
 
     useEffect(() => {
         const getData = async () => {
@@ -40,7 +40,17 @@ const MapDisplay = ({ search, allCountries, setAllCountries }) => {
         }
     };
 
+    useEffect(() => {
+        if (!map) return;
+        map.setMaxBounds([
+            [-90, -388],
+            [90, 388],
+        ]);
+        console.log(map.getBounds());
+    }, [map]);
+
     const handleMapFocus = (coords) => {
+        if (!map) return;
         map.flyTo(coords, 3);
     };
 
@@ -52,7 +62,7 @@ const MapDisplay = ({ search, allCountries, setAllCountries }) => {
                 className="leaflet-container"
                 maxZoom={6}
                 minZoom={2}
-                whenCreated={setMap}
+                whenCreated={(mapInstance) => setMap(mapInstance)}
             >
                 <TileLayer url={tiles} attribution={attr}></TileLayer>
                 {allCountries.map((country) => (
