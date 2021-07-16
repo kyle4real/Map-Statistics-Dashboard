@@ -61,7 +61,7 @@ const DataDisplay = () => {
                             <DataGraph country={searchCountry} />
                         </Paper>
                     </Grid>
-                    {/* DATA FIELDS */}
+                    {/* DATA TOTALS */}
                     <Grid item xs={12} md={4}>
                         <Paper className={`${classes.paper} ${classes.paperFixedHeight}`}>
                             {Object.keys(countryTotals).length !== 0 && (
@@ -90,12 +90,13 @@ const useStyles = makeStyles((theme) => ({
         display: "flex",
     },
     paperFixedHeight: {
-        height: "50vh",
+        minHeight: "50vh",
     },
     paper: {
         padding: theme.spacing(2),
         overflow: "hidden",
         flexDirection: "column",
+        height: "100%",
     },
     backToMapLink: {
         textDecoration: "none",

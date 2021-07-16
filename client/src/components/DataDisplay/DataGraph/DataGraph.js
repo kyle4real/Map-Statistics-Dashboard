@@ -29,7 +29,7 @@ const DataGraph = ({ country }) => {
     };
 
     return (
-        <>
+        <div className={classes.dataGraph}>
             <div className={classes.graphHeader}>
                 <Title>Data Graph</Title>
                 <Typography
@@ -111,18 +111,24 @@ const DataGraph = ({ country }) => {
                     options={{ maintainAspectRatio: false }}
                 />
             </div>
-        </>
+        </div>
     );
 };
 
 const useStyles = makeStyles((theme) => ({
+    dataGraph: {
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "space-between",
+        height: "100%",
+    },
     graphHeader: {
         display: "flex",
         justifyContent: "space-between",
         alignItems: "center",
     },
     graphContainer: {
-        height: "100%",
+        height: "40vh",
     },
     formControl: {
         minWidth: 80,
